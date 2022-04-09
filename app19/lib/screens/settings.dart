@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import './pickers/material_picker.dart';
 
+Color currentColor = Colors.amber;
+
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
 
@@ -11,7 +13,6 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   bool lightTheme = true;
-  Color currentColor = Colors.amber;
   List<Color> currentColors = [Colors.yellow, Colors.green];
   List<Color> colorHistory = [];
 

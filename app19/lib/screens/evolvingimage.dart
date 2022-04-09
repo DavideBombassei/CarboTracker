@@ -11,21 +11,18 @@ class _EvolvingImageState extends State<EvolvingImage> {
   String namepezzo = '1pezzo';
   String namepuzzle = '1puzzle';
   var _pezzo = 0;
-  var _agg;
   bool? _checkstatus;
-  DateTime now = new DateTime.now();
-  DateTime _controllDate = new DateTime.now();
+  DateTime _controllDate = DateTime.now();
 
   @override
   void initState() {
-    _agg = 0;
     _checkstatus = false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _controllDate = new DateTime(now.year, now.month, now.day);
+    _controllDate = DateTime(_controllDate.year, _controllDate.month, _controllDate.day);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -33,13 +30,11 @@ class _EvolvingImageState extends State<EvolvingImage> {
         ElevatedButton(
           child: Text('Check carbo status $_controllDate'),
           onPressed: () {
-            _pezzo = _pezzo + 1;
-            DateTime now2 = new DateTime.now();
-            DateTime currentDate =
-                new DateTime(now2.year, now2.month, now2.day);
-            if (currentDate.compareTo(_controllDate) == 0) {
+            DateTime currentDate = DateTime.now();
+            currentDate = DateTime(currentDate.year, currentDate.month, currentDate.day);
+            if (currentDate == _controllDate) {
               _checkstatus = false;
-              _controllDate = _controllDate.add(Duration(days: 1));
+              _controllDate = _controllDate.add(const Duration(days: 1));
             } else {
               _checkstatus = true;
             }
@@ -70,7 +65,7 @@ class _EvolvingImageState extends State<EvolvingImage> {
                             Positioned(
                                 top: -50,
                                 child: Image.asset(
-                                    'assets/images/$namepezzo$_pezzo.png',
+                                    'assets/images/$namepezzo${_pezzo+1}.png',
                                     width: 100,
                                     height: 100))
                           ],
@@ -104,9 +99,7 @@ class _EvolvingImageState extends State<EvolvingImage> {
 
   void _changeImage() {
     setState(() {
-      _agg = _agg + 1;
-      _controllDate = _controllDate.add(Duration(days: 1));
-      //_checkstatus = true;
+      _pezzo = _pezzo + 1;
       Navigator.pop(context);
     });
   }
