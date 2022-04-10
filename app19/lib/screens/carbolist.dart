@@ -84,51 +84,62 @@ class _CarboListState extends State<CarboList> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                IconButton(
+                TextButton(
                   onPressed: () {
                     setState(() {
-                      _addCarbo10();
+                      _removeCarbo1();
                     });
                   },
-                  icon: const Icon(Icons.add),
-                  color: Colors.green,
+                  style: TextButton.styleFrom(primary: Colors.red),
+                  child: Text('-1'),
                 ),
-                IconButton(
+                TextButton(
                   onPressed: () {
                     setState(() {
                       _removeCarbo10();
                     });
                   },
-                  icon: Icon(Icons.remove),
-                  color: Colors.red,
+                  style: TextButton.styleFrom(
+                    primary: Colors.red,
+                  ),
+                  child: Text('-10'),
                 ),
               ],
             ),
             Row(
-              children: [Text('       ${carb}g       ')],
+              children: [
+                Text(
+                  '       ${carb}g       ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
             Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _addCarbo10();
+                        });
+                      },
+                      style: TextButton.styleFrom(
+                        primary: Colors.green,
+                      ),
+                      child: Text('+10'),
+                    ),
+                    TextButton(
                       onPressed: () {
                         setState(() {
                           _addCarbo1();
                         });
                       },
-                      icon: Icon(Icons.add),
-                      color: Colors.green,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _removeCarbo1();
-                        });
-                      },
-                      icon: Icon(Icons.remove),
-                      color: Colors.red,
+                      style: TextButton.styleFrom(
+                        primary: Colors.green,
+                      ),
+                      child: Text('+1'),
                     ),
                   ],
                 ),
