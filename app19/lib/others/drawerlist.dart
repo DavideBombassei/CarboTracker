@@ -18,7 +18,11 @@ class DrawerList extends StatelessWidget {
             'Carbo-List',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          trailing: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_right)),
+          trailing: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'carbolist');
+              },
+              icon: Icon(Icons.arrow_right)),
         ),
         ListTile(
           leading: const Icon(Icons.calendar_month),
