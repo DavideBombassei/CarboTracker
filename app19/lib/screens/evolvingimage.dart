@@ -10,7 +10,7 @@ class _EvolvingImageState extends State<EvolvingImage> {
   final val = 13;
   String namepezzo = '1pezzo';
   String namepuzzle = '1puzzle';
-  var _pezzo = 0;
+  var _pezzo =0;
   bool? _checkstatus;
   DateTime _controllDate = DateTime.now();
 

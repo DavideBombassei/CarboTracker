@@ -29,12 +29,9 @@ class _PageViewDemoState extends State<PageViewDemo> {
         data: new IconThemeData(color: _kArrowColor),
         child: new Stack(
           children: <Widget>[
-            new PageView.builder(
-              physics: new AlwaysScrollableScrollPhysics(),
+            new PageView(
               controller: _controller,
-              itemBuilder: (BuildContext context, int index) {
-                return _pages[index % _pages.length];
-              },
+              children: _pages,
             ),
             new Positioned(
               bottom: 0.0,
