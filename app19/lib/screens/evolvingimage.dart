@@ -6,13 +6,16 @@ class EvolvingImage extends StatefulWidget {
   State<EvolvingImage> createState() => _EvolvingImageState();
 }
 
+var _pezzo = 0;
+DateTime _controllDate = DateTime.now();
+// TO FIX : https://docs.flutter.dev/cookbook/persistence/key-value
+
 class _EvolvingImageState extends State<EvolvingImage> {
   final val = 13;
-  String namepezzo = '1pezzo';
-  String namepuzzle = '1puzzle';
-  var _pezzo =0;
+  final numpuzzle = 1;
+  String pez = 'pezzo';
+  String puz = 'puzzle';
   bool? _checkstatus;
-  DateTime _controllDate = DateTime.now();
 
   @override
   void initState() {
@@ -22,19 +25,20 @@ class _EvolvingImageState extends State<EvolvingImage> {
 
   @override
   Widget build(BuildContext context) {
-    _controllDate = DateTime(_controllDate.year, _controllDate.month, _controllDate.day);
+    _controllDate =
+        DateTime(_controllDate.year, _controllDate.month, _controllDate.day);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset('assets/images/$namepuzzle$_pezzo.png'),
+        Image.asset('assets/images/$numpuzzle$puz$_pezzo.png'),
         ElevatedButton(
-          child: Text('Check carbo status $_controllDate'),
+          child: Text('Check carbo status'),
           onPressed: () {
             DateTime currentDate = DateTime.now();
-            currentDate = DateTime(currentDate.year, currentDate.month, currentDate.day);
+            currentDate =
+                DateTime(currentDate.year, currentDate.month, currentDate.day);
             if (currentDate == _controllDate) {
               _checkstatus = false;
-              _controllDate = _controllDate.add(const Duration(days: 1));
             } else {
               _checkstatus = true;
             }
@@ -56,18 +60,19 @@ class _EvolvingImageState extends State<EvolvingImage> {
                                   color: Colors.white),
                               padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
                               child: Text(
-                                  "                                                                                                                   Bravo, hai guadagnato un nuovo pezzo del puzzle",
+                                  "Bravo, hai guadagnato un nuovo pezzo del puzzle",
                                   style: TextStyle(
                                       fontSize: 24,
                                       color: Color.fromARGB(255, 82, 12, 7)),
                                   textAlign: TextAlign.center),
                             ),
                             Positioned(
-                                top: -50,
+                                top: 120,
+                                right: 35,
                                 child: Image.asset(
-                                    'assets/images/$namepezzo${_pezzo+1}.png',
-                                    width: 100,
-                                    height: 100))
+                                    'assets/images/$numpuzzle$puz${_pezzo + 1}.png',
+                                    width: 300,
+                                    height: 300))
                           ],
                         ),
                         actions: <Widget>[
@@ -100,6 +105,7 @@ class _EvolvingImageState extends State<EvolvingImage> {
   void _changeImage() {
     setState(() {
       _pezzo = _pezzo + 1;
+      _controllDate = _controllDate.add(const Duration(days: 1));
       Navigator.pop(context);
     });
   }
