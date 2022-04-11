@@ -1,7 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-int carb = 0;
+int carb = 0; //da sistemare
+double carbgrams = 0; //grammi carbo che vado ad aggiungere all'indicatore carbocounter
+double buttondim = 60; //dimensione bottoni +-10 +-1
+int lim = 500; //limite giornaliero carboidrati per normalizzare entro [0,1] perchè richiesto dall'indicatore
 
 class CarboList extends StatefulWidget {
   @override
@@ -9,28 +12,28 @@ class CarboList extends StatefulWidget {
 }
 
 class _CarboListState extends State<CarboList> {
-  void _addCarbo10() {
+  void _addCarbo10() { //funzione per aggiungere 10g
     setState(() {
       carb += 10;
       print(carb);
     });
   }
 
-  void _addCarbo1() {
+  void _addCarbo1() { //funzione per aggiungere 1g
     setState(() {
       carb += 1;
       print(carb);
     });
   }
 
-  void _removeCarbo10() {
+  void _removeCarbo10() { //funzione per togliere 10g
     setState(() {
       carb -= 10;
       print(carb);
     });
   }
 
-  void _removeCarbo1() {
+  void _removeCarbo1() { //funzione per togliere 1g
     setState(() {
       carb -= 1;
       print(carb);
@@ -38,14 +41,15 @@ class _CarboListState extends State<CarboList> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Container(
         child: Scaffold(
       appBar: AppBar(
         title: Text('Carbo-List'),
       ),
       body: ListView(
-        children: [
+        //tiles dei cibi
+        children: [ 
           _carboListTile('Bread'),
           _carboListTile('Candies'),
           _carboListTile('Chocolate'),
@@ -72,6 +76,7 @@ class _CarboListState extends State<CarboList> {
     ));
   }
 
+  //classe per definire i singoli tile
   Widget _carboListTile(String _title) {
     return ExpansionTile(
       title: Text(
@@ -79,21 +84,24 @@ class _CarboListState extends State<CarboList> {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       children: [
-        Row(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButton(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: buttondim,
+                child: TextButton(
                   onPressed: () {
                     setState(() {
                       _removeCarbo1();
                     });
                   },
                   style: TextButton.styleFrom(primary: Colors.red),
-                  child: Text('-1'),
+                  child: Text('1'),
                 ),
-                TextButton(
+              ),
+              SizedBox(
+                width: buttondim,
+                child: TextButton(
                   onPressed: () {
                     setState(() {
                       _removeCarbo10();
@@ -102,24 +110,20 @@ class _CarboListState extends State<CarboList> {
                   style: TextButton.styleFrom(
                     primary: Colors.red,
                   ),
-                  child: Text('-10'),
+                  child: Text('10'),
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  '             ${carb}g             ',
+              ),
+              SizedBox(
+                width: 80,
+                child: Text(
+                  '${carb}g',
                   style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
-              ],
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
+              ),
+              SizedBox(
+                width: buttondim,
+                child: TextButton(
                       onPressed: () {
                         setState(() {
                           _addCarbo10();
@@ -128,32 +132,40 @@ class _CarboListState extends State<CarboList> {
                       style: TextButton.styleFrom(
                         primary: Colors.green,
                       ),
-                      child: Text('+10'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _addCarbo1();
-                        });
-                      },
-                      style: TextButton.styleFrom(
-                        primary: Colors.green,
-                      ),
-                      child: Text('+1'),
-                    ),
-                  ],
+                      child: Text('10'),
+                    )
                 ),
-              ],
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(onPressed: () {}, child: Icon(Icons.add)),
-          ],
-        )
-      ],
-    );
+              SizedBox(
+                width: buttondim,
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _addCarbo1();
+                    });
+                  },
+                  style: TextButton.styleFrom(
+                    primary: Colors.green,
+                  ),
+                  child: Text('1'),
+                ),
+              ),
+              SizedBox(
+                height: 40,
+                width: 50,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    setState(() {
+                      carbgrams = carbgrams + (carb/lim);
+                      carb = 0;
+                    });
+                  },
+                  child: Icon(Icons.add),
+                  elevation: 0,
+                  ),
+              ),
+            ],
+          ),
+        ],
+      );
   }
 }
