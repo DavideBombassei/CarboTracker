@@ -109,7 +109,7 @@ class _CarboListState extends State<CarboList> {
             Row(
               children: [
                 Text(
-                  '       ${carb}g       ',
+                  '             ${carb}g             ',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -147,6 +147,12 @@ class _CarboListState extends State<CarboList> {
             ),
           ],
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(onPressed: () {}, child: Icon(Icons.add)),
+          ],
+        )
       ],
     );
   }
