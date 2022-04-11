@@ -2,9 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 int carb = 0; //da sistemare
-double carbgrams = 0; //grammi carbo che vado ad aggiungere all'indicatore carbocounter
+double carbgrams =
+    0; //grammi carbo che vado ad aggiungere all'indicatore carbocounter
 double buttondim = 60; //dimensione bottoni +-10 +-1
-int lim = 500; //limite giornaliero carboidrati per normalizzare entro [0,1] perchè richiesto dall'indicatore
+int lim =
+    500; //limite giornaliero carboidrati per normalizzare entro [0,1] perchè richiesto dall'indicatore
 
 class CarboList extends StatefulWidget {
   @override
@@ -12,36 +14,36 @@ class CarboList extends StatefulWidget {
 }
 
 class _CarboListState extends State<CarboList> {
-  void _addCarbo10() { //funzione per aggiungere 10g
+  void _addCarbo10() {
+    //funzione per aggiungere 10g
     setState(() {
       carb += 10;
-      print(carb);
     });
   }
 
-  void _addCarbo1() { //funzione per aggiungere 1g
+  void _addCarbo1() {
+    //funzione per aggiungere 1g
     setState(() {
       carb += 1;
-      print(carb);
     });
   }
 
-  void _removeCarbo10() { //funzione per togliere 10g
+  void _removeCarbo10() {
+    //funzione per togliere 10g
     setState(() {
       carb -= 10;
-      print(carb);
     });
   }
 
-  void _removeCarbo1() { //funzione per togliere 1g
+  void _removeCarbo1() {
+    //funzione per togliere 1g
     setState(() {
       carb -= 1;
-      print(carb);
     });
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Container(
         child: Scaffold(
       appBar: AppBar(
@@ -49,123 +51,123 @@ class _CarboListState extends State<CarboList> {
       ),
       body: ListView(
         //tiles dei cibi
-        children: [ 
-          _carboListTile('Bread'),
-          _carboListTile('Candies'),
-          _carboListTile('Chocolate'),
-          _carboListTile('Corn'),
-          _carboListTile('Corn-Flakes'),
-          _carboListTile('Croissant'),
-          _carboListTile('French Fries'),
-          _carboListTile('Fruit (Fresh)'),
-          _carboListTile('Fruit (Dried)'),
-          _carboListTile('Frit Juice'),
-          _carboListTile('Honey'),
-          _carboListTile('Ice Cream'),
-          _carboListTile('Jam'),
-          _carboListTile('Legumes'),
-          _carboListTile('Milk'),
-          _carboListTile('Nutella'),
-          _carboListTile('Pasta'),
-          _carboListTile('Pizza'),
-          _carboListTile('Rice'),
-          _carboListTile('Sugar'),
-          _carboListTile('Vegetables'),
+        children: [
+          _carboListTile('Bread', 0.6),
+          _carboListTile('Candies', 0.9),
+          _carboListTile('Chocolate', 0.5),
+          _carboListTile('Corn', 0.75),
+          _carboListTile('Corn-Flakes', 0.9),
+          _carboListTile('Croissant', 0.55),
+          _carboListTile('French Fries', 0.4),
+          _carboListTile('Fruit (Fresh)', 0.1),
+          _carboListTile('Fruit (Dried)', 0.7),
+          _carboListTile('Frit Juice', 0.15),
+          _carboListTile('Honey', 0.8),
+          _carboListTile('Ice Cream', 0.25),
+          _carboListTile('Jam', 0.6),
+          _carboListTile('Legumes', 0.5),
+          _carboListTile('Milk', 0.05),
+          _carboListTile('Nutella', 0.6),
+          _carboListTile('Pasta', 0.7),
+          _carboListTile('Pizza', 0.6),
+          _carboListTile('Rice', 0.8),
+          _carboListTile('Sugar', 1),
+          _carboListTile('Vegetables', 0.07),
         ],
       ),
     ));
   }
 
   //classe per definire i singoli tile
-  Widget _carboListTile(String _title) {
+  // carbperc prende la percentale di carbo in ogni cibo
+  Widget _carboListTile(String _title, double carbperc) {
     return ExpansionTile(
       title: Text(
         _title,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: buttondim,
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _removeCarbo1();
+                  });
+                },
+                style: TextButton.styleFrom(primary: Colors.red),
+                child: Text('1'),
+              ),
+            ),
+            SizedBox(
+              width: buttondim,
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _removeCarbo10();
+                  });
+                },
+                style: TextButton.styleFrom(
+                  primary: Colors.red,
+                ),
+                child: Text('10'),
+              ),
+            ),
+            SizedBox(
+              width: 80,
+              child: Text(
+                '${carb}g',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
                 width: buttondim,
                 child: TextButton(
                   onPressed: () {
                     setState(() {
-                      _removeCarbo1();
-                    });
-                  },
-                  style: TextButton.styleFrom(primary: Colors.red),
-                  child: Text('1'),
-                ),
-              ),
-              SizedBox(
-                width: buttondim,
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _removeCarbo10();
-                    });
-                  },
-                  style: TextButton.styleFrom(
-                    primary: Colors.red,
-                  ),
-                  child: Text('10'),
-                ),
-              ),
-              SizedBox(
-                width: 80,
-                child: Text(
-                  '${carb}g',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(
-                width: buttondim,
-                child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _addCarbo10();
-                        });
-                      },
-                      style: TextButton.styleFrom(
-                        primary: Colors.green,
-                      ),
-                      child: Text('10'),
-                    )
-                ),
-              SizedBox(
-                width: buttondim,
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _addCarbo1();
+                      _addCarbo10();
                     });
                   },
                   style: TextButton.styleFrom(
                     primary: Colors.green,
                   ),
-                  child: Text('1'),
+                  child: Text('10'),
+                )),
+            SizedBox(
+              width: buttondim,
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _addCarbo1();
+                  });
+                },
+                style: TextButton.styleFrom(
+                  primary: Colors.green,
                 ),
+                child: Text('1'),
               ),
-              SizedBox(
-                height: 40,
-                width: 50,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    setState(() {
-                      carbgrams = carbgrams + (carb/lim);
-                      carb = 0;
-                    });
-                  },
-                  child: Icon(Icons.add),
-                  elevation: 0,
-                  ),
+            ),
+            SizedBox(
+              height: 40,
+              width: 50,
+              child: FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    carbgrams = carbgrams + ((carb * carbperc) / lim);
+                    carb = 0;
+                  });
+                },
+                child: Icon(Icons.add),
+                elevation: 0,
               ),
-            ],
-          ),
-        ],
-      );
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
