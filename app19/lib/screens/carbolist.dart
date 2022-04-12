@@ -1,9 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:app19/others/carbohydrates.dart';
+import 'package:provider/provider.dart';
 
 int carb = 0; //da sistemare
-double carbgrams =
-    0; //grammi carbo che vado ad aggiungere all'indicatore carbocounter
 double buttondim = 60; //dimensione bottoni +-10 +-1
 int lim =
     500; //limite giornaliero carboidrati per normalizzare entro [0,1] perchè richiesto dall'indicatore
@@ -157,8 +156,9 @@ class _CarboListState extends State<CarboList> {
               child: FloatingActionButton(
                 onPressed: () {
                   setState(() {
-                    carbgrams = carbgrams + ((carb * carbperc) / lim);
+                    Provider.of<carbohydrates>(context, listen: false).addcarbo(carb, lim, carbperc);
                     carb = 0;
+                    print(carbgrams);
                   });
                 },
                 child: Icon(Icons.add),

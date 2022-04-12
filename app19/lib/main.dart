@@ -1,9 +1,11 @@
+import 'package:app19/others/carbohydrates.dart';
 import 'package:app19/screens/calendar.dart';
 import 'package:app19/screens/carbolist.dart';
 import 'package:flutter/material.dart';
 import 'package:app19/screens/loginpage.dart';
 import 'package:app19/screens/homepage.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -75,18 +77,21 @@ class MyApp extends StatelessWidget {
         themeCollection: themeCollection,
         defaultThemeId: AppThemes.LightBlue,
         builder: (context, theme) {
-          return MaterialApp(
-            theme: theme,
-            initialRoute: 'login',
-            routes: {
-              'login': (context) => LoginPage(),
-              'home': (context) => HomePage(),
-              'calendar': (context) => Calendar(),
-              'settings': (context) => Settings(
-                    title: 'Settings',
-                  ),
-              'carbolist': (context) => CarboList(),
-            },
+          return ChangeNotifierProvider<carbohydrates>(
+            create: (context) => carbohydrates(),
+            child: MaterialApp(
+              theme: theme,
+              initialRoute: 'login',
+              routes: {
+                'login': (context) => LoginPage(),
+                'home': (context) => HomePage(),
+                'calendar': (context) => Calendar(),
+                'settings': (context) => Settings(
+                      title: 'Settings',
+                    ),
+                'carbolist': (context) => CarboList(),
+              },
+            ),
           );
         });
   }
