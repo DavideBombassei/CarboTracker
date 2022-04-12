@@ -14,7 +14,7 @@ class _CalendarState extends State<Calendar> {
   late Map<DateTime, List<Event>> selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+  DateTime _selectedDay = DateTime.now();
 
   TextEditingController _eventController = TextEditingController();
 
@@ -54,15 +54,22 @@ class _CalendarState extends State<Calendar> {
                     TextButton(
                         onPressed: () {
                           if (_eventController.text.isEmpty) {
-                            Navigator.pop(context);
                             return;
                           } else {
                             if (selectedEvents[_selectedDay] != null) {
                               selectedEvents[_selectedDay]?.add(
                                 Event(title: _eventController.text),
                               );
+                            } else {
+                              selectedEvents[_selectedDay] = [
+                                Event(title: _eventController.text)
+                              ];
                             }
                           }
+                          Navigator.pop(context);
+                          _eventController.clear();
+                          setState(() {});
+                          return;
                         },
                         child: Text('Confirm')),
                   ],
@@ -73,37 +80,51 @@ class _CalendarState extends State<Calendar> {
     );
   }
 
-  Widget _calendar() => TableCalendar(
-        focusedDay: _focusedDay,
-        firstDay: DateTime.utc(2010),
-        lastDay: DateTime.utc(2030),
-        selectedDayPredicate: (day) {
-          return isSameDay(_selectedDay, day);
-        },
-        eventLoader: _getEventsfromDay,
-        headerStyle: HeaderStyle(formatButtonShowsNext: false),
-        calendarStyle: CalendarStyle(
-          todayDecoration:
-              BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
-          selectedDecoration:
-              BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-        ),
-        onDaySelected: (selectedDay, focusedDay) {
-          setState(() {
-            _selectedDay = selectedDay;
-            _focusedDay = focusedDay;
-          });
-        },
-        calendarFormat: _calendarFormat,
-        onFormatChanged: (format) {
-          setState(() {
-            _calendarFormat = format;
-          });
-        },
-        onPageChanged: (focusedDay) {
-          _focusedDay = focusedDay;
-        },
-        startingDayOfWeek: StartingDayOfWeek.monday,
+  Widget _calendar() => Column(
+        children: [
+          TableCalendar(
+            focusedDay: _focusedDay,
+            firstDay: DateTime.utc(2010),
+            lastDay: DateTime.utc(2030),
+            selectedDayPredicate: (day) {
+              return isSameDay(_selectedDay, day);
+            },
+            eventLoader: _getEventsfromDay,
+            headerStyle: HeaderStyle(formatButtonShowsNext: false),
+            calendarStyle: CalendarStyle(
+              todayDecoration:
+                  BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
+              selectedDecoration:
+                  BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+            ),
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay;
+              });
+            },
+            calendarFormat: _calendarFormat,
+            onFormatChanged: (format) {
+              setState(() {
+                _calendarFormat = format;
+              });
+            },
+            onPageChanged: (focusedDay) {
+              _focusedDay = focusedDay;
+            },
+            startingDayOfWeek: StartingDayOfWeek.monday,
+          ),
+          ..._getEventsfromDay(_selectedDay).map((Event event) => ListTile(
+                title: TextButton(
+                    child: Text(event.title),
+                    onPressed: () {},
+                    onLongPress: () {
+                      setState(() {
+                        selectedEvents.clear();
+                      });
+                    }),
+              )),
+        ],
       );
 }
 
