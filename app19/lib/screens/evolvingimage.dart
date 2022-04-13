@@ -68,11 +68,11 @@ class _EvolvingImageState extends State<EvolvingImage> {
                             ),
                             Positioned(
                                 top: 120,
-                                right: 35,
+                                left: 35,
                                 child: Image.asset(
-                                    'assets/images/$numpuzzle$puz${_pezzo + 1}.png',
-                                    width: 300,
-                                    height: 300))
+                                    'assets/images/$numpuzzle$pez${_pezzo + 1}.png',
+                                    width: 150,
+                                    height: 150))
                           ],
                         ),
                         actions: <Widget>[
