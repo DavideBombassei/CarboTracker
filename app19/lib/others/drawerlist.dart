@@ -10,7 +10,11 @@ class DrawerList extends StatelessWidget {
             'Profile',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          trailing: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_right)),
+          trailing: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'profilepage');
+              },
+              icon: Icon(Icons.arrow_right)),
         ),
         ListTile(
           leading: const Icon(Icons.info),

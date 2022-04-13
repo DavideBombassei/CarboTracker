@@ -1,6 +1,8 @@
 import 'package:app19/others/carbohydrates.dart';
 import 'package:app19/screens/calendar.dart';
 import 'package:app19/screens/carbolist.dart';
+import 'package:app19/screens/editprofile.dart';
+import 'package:app19/screens/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:app19/screens/loginpage.dart';
 import 'package:app19/screens/homepage.dart';
@@ -90,6 +92,8 @@ class MyApp extends StatelessWidget {
                       title: 'Settings',
                     ),
                 'carbolist': (context) => CarboList(),
+                'profilepage': (context) => ProfilePage(),
+                'editprofile': (context) => EditProfile(),
               },
             ),
           );

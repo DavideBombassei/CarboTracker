@@ -8,6 +8,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
+  avatar_glow:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: e3378bb374b7f3caaa87391ebb301392a57f482a
+      url: "https://github.com/apgapg/avatar_glow"
+    source: git
+    version: "2.0.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -43,6 +52,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  crypto:
+    dependency: transitive
+    description:
+      name: crypto
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -149,6 +165,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  multiavatar:
+    dependency: "direct main"
+    description:
+      name: multiavatar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5"
   nested:
     dependency: transitive
     description:
