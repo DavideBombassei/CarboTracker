@@ -33,20 +33,19 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  final _name = 'Mario';
-  final _surname = 'Rossi';
+  final _name = 'Mario Rossi';
   final _email = 'mario.rossi@gmail.com';
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(27.0),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AvatarGlow(
-                endRadius: 70.0,
+                endRadius: 100.0,
                 child: Material(
                   // Replace this child with your own
                   elevation: 8.0,
@@ -54,17 +53,17 @@ class _ProfileState extends State<Profile> {
                   child: CircleAvatar(
                     backgroundColor: Color.fromARGB(255, 192, 12, 12),
                     child: Image.asset('assets/images/logo.png',
-                        width: 250, height: 250),
-                    radius: 30.0,
+                        width: 400, height: 400),
+                    radius: 60.0,
                   ),
                 ),
               ),
               Column(children: [
                 Text(
-                  '$_name $_surname',
+                  '$_name',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 Text(
                   '$_email',
                   style: TextStyle(color: Colors.grey),

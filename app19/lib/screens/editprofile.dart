@@ -28,9 +28,10 @@ class _EditProfileState extends State<EditProfileState> {
     });
   }
 
-  final _name = 'Alessia';
-  final _surname = 'Stefenato';
+  final _name = 'Mario Rossi';
   final _email = 'mario.rossi@gmail.com';
+  final _namecontroller = TextEditingController();
+  final _emailcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,30 +51,36 @@ class _EditProfileState extends State<EditProfileState> {
                 child: CircleAvatar(
                   backgroundColor: Color.fromARGB(255, 192, 12, 12),
                   child: Image.asset('assets/images/logo.png',
-                      width: 150, height: 150),
-                  radius: 30.0,
+                      width: 250, height: 250),
+                  radius: 50.0,
                 ),
               ),
             ),
             Column(
               children: [
                 TextField(
+                  controller: _namecontroller,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Name',
-                    hintText: '$_name $_surname',
+                    hintText: '$_name',
                   ),
                 ),
+                const SizedBox(height: 20),
                 TextField(
+                  controller: _emailcontroller,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: '$_email',
                   ),
                 ),
+                const SizedBox(height: 20),
                 ElevatedButton(
-                  child: Text('Save'),
+                  child: Text('Save changes'),
                   onPressed: () {
+                    Navigator.pop(context);
+
                     //if (_usercontroller.value.text == 'anna_arnaudo' && _pswcontroller.value.text == 'Biowrbl19'){
                   },
                 ),
