@@ -27,79 +27,105 @@ class _EvolvingImageState extends State<EvolvingImage> {
   Widget build(BuildContext context) {
     _controllDate =
         DateTime(_controllDate.year, _controllDate.month, _controllDate.day);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset('assets/images/$numpuzzle$puz$_pezzo.png'),
-        ElevatedButton(
-          child: Text('Check carbo status'),
-          onPressed: () {
-            DateTime currentDate = DateTime.now();
-            currentDate =
-                DateTime(currentDate.year, currentDate.month, currentDate.day);
-            if (currentDate == _controllDate) {
-              _checkstatus = false;
-            } else {
-              _checkstatus = true;
-            }
-            if (val > 10 && val < 20 && _checkstatus == false) {
-              showDialog(
-                  context: context,
-                  builder: (_) => AlertDialog(
-                        backgroundColor: Colors.transparent,
-                        insetPadding: EdgeInsets.all(10),
-                        content: Stack(
-                          overflow: Overflow.visible,
-                          alignment: Alignment.center,
-                          children: <Widget>[
-                            Container(
-                              width: double.infinity,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.white),
-                              padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
-                              child: Text(
-                                  "Bravo, hai guadagnato un nuovo pezzo del puzzle",
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      color: Color.fromARGB(255, 82, 12, 7)),
-                                  textAlign: TextAlign.center),
+    return Container(
+        margin: new EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 30),
+            Text(
+              'Puzzle',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            const SizedBox(height: 50),
+            Image.asset('assets/images/$numpuzzle$puz$_pezzo.png',
+                width: 320, height: 320),
+            const SizedBox(height: 50),
+            ElevatedButton(
+              child: Text('Check carbo status'),
+              onPressed: () {
+                DateTime currentDate = DateTime.now();
+                currentDate = DateTime(
+                    currentDate.year, currentDate.month, currentDate.day);
+                if (currentDate == _controllDate) {
+                  _checkstatus = false;
+                } else {
+                  _checkstatus = true;
+                }
+                if (val > 10 && val < 20 && _checkstatus == false) {
+                  showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                            insetPadding: EdgeInsets.symmetric(horizontal: 40),
+                            backgroundColor: Colors.transparent,
+                            //insetPadding: EdgeInsets.all(30),
+                            content: Stack(
+                              overflow: Overflow.visible,
+                              alignment: Alignment.center,
+                              children: <Widget>[
+                                Container(
+                                    //width: double.infinity,
+                                    height: 170,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255)),
+                                    padding:
+                                        EdgeInsets.fromLTRB(20, 50, 20, 20),
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(height: 30),
+                                        Text(
+                                            "Good job, you have earned a new piece of puzzle",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Color.fromARGB(
+                                                    255, 0, 0, 0)),
+                                            textAlign: TextAlign.center),
+                                      ],
+                                    )),
+                                Positioned(
+                                    top: -65,
+                                    child: Image.asset(
+                                        'assets/images/$numpuzzle$pez${_pezzo + 1}.png',
+                                        width: 150,
+                                        height: 150))
+                              ],
                             ),
-                            Positioned(
-                                top: 120,
-                                left: 35,
-                                child: Image.asset(
-                                    'assets/images/$numpuzzle$pez${_pezzo + 1}.png',
-                                    width: 150,
-                                    height: 150))
-                          ],
-                        ),
-                        actions: <Widget>[
-                          ElevatedButton(
-                              onPressed: _changeImage,
-                              child: Text('Add new piece')),
-                        ],
-                      ));
-            } else {
-              if (val < 10 || val > 20) {
-                showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                        content:
-                            Text('Peccato, non ci sono nuovi pezzi per te')));
-              } else {
-                showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                        content:
-                            Text('Hai già ricevuto un nuovo pezzo per oggi')));
-              }
-            }
-          },
-        ),
-      ],
-    );
+                            actions: <Widget>[
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    child: ElevatedButton(
+                                        onPressed: _changeImage,
+                                        child: Text('Add new piece')),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ));
+                } else {
+                  if (val < 10 || val > 20) {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                            content: Text(
+                                'Peccato, non ci sono nuovi pezzi per te')));
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                            content: Text(
+                                'Hai già ricevuto un nuovo pezzo per oggi')));
+                  }
+                }
+              },
+            ),
+          ],
+        ));
   }
 
   void _changeImage() {
