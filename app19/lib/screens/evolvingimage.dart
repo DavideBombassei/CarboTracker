@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:image_downloader/image_downloader.dart';
 
 class EvolvingImage extends StatefulWidget {
   @override
   State<EvolvingImage> createState() => _EvolvingImageState();
 }
 
-var _pezzo = 0;
+var _pezzo = 1; //queste due variabili sono da salvare altrimenti
+var numpuzzle = 1; //chiudendo forzatamente l'app vengono reinizzializate
 DateTime _controllDate = DateTime.now();
 // TO FIX : https://docs.flutter.dev/cookbook/persistence/key-value
 
 class _EvolvingImageState extends State<EvolvingImage> {
   final val = 13;
-  final numpuzzle = 1;
+  //final numpuzzle = 1;
   String pez = 'pezzo';
   String puz = 'puzzle';
   bool? _checkstatus;
@@ -138,9 +140,53 @@ class _EvolvingImageState extends State<EvolvingImage> {
 
   void _changeImage() {
     setState(() {
-      _pezzo = _pezzo + 1;
+      if (_pezzo == 9) {
+        if (numpuzzle == 4) {
+          showDialog(
+              context: context,
+              builder: (_) => AlertDialog(
+                  content: Text('!!', textAlign: TextAlign.center)));
+        } else {}
+      } else {
+        _pezzo = _pezzo + 4;
+      }
       _controllDate = _controllDate.add(const Duration(days: 1));
       Navigator.pop(context);
+      if (_pezzo == 9) {
+        numpuzzle = numpuzzle + 1;
+        _pezzo = 1;
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                insetPadding: EdgeInsets.symmetric(horizontal: 40),
+                //backgroundColor: Colors.transparent,
+                content: Container(
+                    width: 170,
+                    child: Column(children: [
+                      Text('GOOD JOB!, you have completed the puzzle',
+                          textAlign: TextAlign.center),
+                      Image.asset('assets/images/${numpuzzle - 1}puzzle9.png',
+                          width: 150, height: 150),
+                      FloatingActionButton(
+                        onPressed: _saveImage,
+                        child: Icon(Icons.save),
+                      )
+                    ]))));
+      }
     });
+  }
+
+  void _saveImage() {
+    try {
+      // Saved with this method.
+      var imageId = ImageDownloader.downloadImage(
+        'assets/images/',
+      );
+      if (imageId == null) {
+        return;
+      }
+    } catch (error) {
+      print(error);
+    }
   }
 }
