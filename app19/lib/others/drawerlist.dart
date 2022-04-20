@@ -2,57 +2,101 @@ import 'package:flutter/material.dart';
 
 class DrawerList extends StatelessWidget {
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        ListTile(
-          leading: const Icon(Icons.portrait_outlined),
-          title: const Text(
-            'Profile',
-            style: TextStyle(fontWeight: FontWeight.bold),
+    return Container(
+      padding: EdgeInsets.all(22),
+      child: Wrap(
+        runSpacing: 4,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.portrait_outlined),
+            title: const Text(
+              'Profile',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, 'profilepage');
+            },
+            trailing: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'profilepage');
+                },
+                icon: Icon(Icons.arrow_right)),
           ),
-          trailing: IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'profilepage');
-              },
-              icon: Icon(Icons.arrow_right)),
-        ),
-        ListTile(
-          leading: const Icon(Icons.info),
-          title: const Text(
-            'Carbo-List',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          ListTile(
+            leading: const Icon(Icons.addchart_rounded),
+            title: const Text(
+              'Carbo-List',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, 'carbolist');
+            },
+            trailing: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'carbolist');
+                },
+                icon: Icon(Icons.arrow_right)),
           ),
-          trailing: IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'carbolist');
-              },
-              icon: Icon(Icons.arrow_right)),
-        ),
-        ListTile(
-          leading: const Icon(Icons.calendar_month),
-          title: const Text(
-            'Calendar',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          ListTile(
+            leading: const Icon(Icons.calendar_month),
+            title: const Text(
+              'Calendar',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, 'calendar');
+            },
+            trailing: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'calendar');
+                },
+                icon: const Icon(Icons.arrow_right)),
           ),
-          trailing: IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'calendar');
-              },
-              icon: const Icon(Icons.arrow_right)),
-        ),
-        ListTile(
-          leading: const Icon(Icons.settings),
-          title: const Text(
-            'Settings',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text(
+              'Settings',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, 'settings');
+            },
+            trailing: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'settings');
+                },
+                icon: Icon(Icons.arrow_right)),
           ),
-          trailing: IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'settings');
-              },
-              icon: Icon(Icons.arrow_right)),
-        ),
-      ],
+          const Divider(
+            color: Colors.black,
+          ),
+          ListTile(
+            leading: const Icon(Icons.info),
+            title: const Text(
+              'Info',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, 'info');
+            },
+            trailing: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'info');
+                },
+                icon: Icon(Icons.arrow_right)),
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text(
+              'Logout',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, 'login');
+            },
+          ),
+        ],
+      ),
     );
   }
 }

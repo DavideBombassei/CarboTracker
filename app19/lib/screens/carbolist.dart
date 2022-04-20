@@ -47,6 +47,7 @@ class _CarboListState extends State<CarboList> {
         child: Scaffold(
       appBar: AppBar(
         title: Text('Carbo-List'),
+        centerTitle: true,
         actions: [
           IconButton(
               icon: Icon(Icons.search),
@@ -70,7 +71,7 @@ class _CarboListState extends State<CarboList> {
           _carboListTile('French Fries', 0.4),
           _carboListTile('Fruit (Fresh)', 0.1),
           _carboListTile('Fruit (Dried)', 0.7),
-          _carboListTile('Frit Juice', 0.15),
+          _carboListTile('Fruit Juice', 0.15),
           _carboListTile('Honey', 0.8),
           _carboListTile('Ice Cream', 0.25),
           _carboListTile('Jam', 0.6),
@@ -196,7 +197,16 @@ class MySearchDelegate extends SearchDelegate {
     'Fruit (Dried)',
     'Fruit Juice',
     'Honey',
-    'ecc...'
+    'Ice Cream',
+    'Jam',
+    'Legumes',
+    'Milk',
+    'Nutella',
+    'Pasta',
+    'Pizza',
+    'Rice',
+    'Sugar',
+    'Vegetables'
   ];
 
   @override

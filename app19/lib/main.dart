@@ -88,16 +88,37 @@ class MyApp extends StatelessWidget {
                 'login': (context) => LoginPage(),
                 'home': (context) => HomePage(),
                 'calendar': (context) => Calendar(),
-                'settings': (context) => Settings(
-                      title: 'Settings',
-                    ),
+                'settings': (context) => Settings(title: 'Settings'),
                 'carbolist': (context) => CarboList(),
                 'profilepage': (context) => ProfilePage(),
                 'editprofile': (context) => EditProfile(),
+                'info': (context) => InfoPage(),
               },
             ),
           );
         });
+  }
+}
+
+class InfoPage extends StatelessWidget {
+  const InfoPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('InfoPage'),
+        centerTitle: true,
+      ),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Inserire i Credits qui'),
+          ],
+        ),
+      ),
+    );
   }
 }
 
