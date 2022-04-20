@@ -43,6 +43,7 @@ dependencies:
       url: https://github.com/apgapg/avatar_glow
       ref: master
   multiavatar: any
+  animated_text_kit: ^4.2.1
 
 dev_dependencies:
   flutter_test:

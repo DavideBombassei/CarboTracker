@@ -47,6 +47,16 @@ class _CarboListState extends State<CarboList> {
         child: Scaffold(
       appBar: AppBar(
         title: Text('Carbo-List'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: MySearchDelegate(),
+                );
+              }),
+        ],
       ),
       body: ListView(
         //tiles dei cibi
@@ -156,7 +166,8 @@ class _CarboListState extends State<CarboList> {
               child: FloatingActionButton(
                 onPressed: () {
                   setState(() {
-                    Provider.of<carbohydrates>(context, listen: false).addcarbo(carb, lim, carbperc);
+                    Provider.of<carbohydrates>(context, listen: false)
+                        .addcarbo(carb, lim, carbperc);
                     carb = 0;
                     print(carbgrams);
                   });
@@ -169,5 +180,73 @@ class _CarboListState extends State<CarboList> {
         ),
       ],
     );
+  }
+}
+
+class MySearchDelegate extends SearchDelegate {
+  List<String> searchResults = [
+    'Bread',
+    'Candies',
+    'Chocolate',
+    'Corn',
+    'Corn-Flakes',
+    'Croissant',
+    'French Fries',
+    'Fruit (Fresh)',
+    'Fruit (Dried)',
+    'Fruit Juice',
+    'Honey',
+    'ecc...'
+  ];
+
+  @override
+  Widget? buildLeading(BuildContext context) => IconButton(
+        onPressed: () {
+          return close(context, null);
+        },
+        icon: Icon(Icons.arrow_back),
+      );
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    IconButton(
+      icon: Icon(Icons.clear),
+      onPressed: () {
+        if (query.isEmpty) {
+          close(context, null);
+        } else {
+          query = '';
+        }
+      },
+    );
+    return null;
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Center(
+      child: Text(query),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<String> suggestions = searchResults.where((searchResult) {
+      final result = searchResult.toLowerCase();
+      final input = query.toLowerCase();
+      return result.contains(input);
+    }).toList();
+    return ListView.builder(
+        itemCount: suggestions.length,
+        itemBuilder: (context, index) {
+          final suggestion = suggestions[index];
+          return ListTile(
+            title: Text(suggestion),
+            onTap: () {
+              query = suggestion;
+              showResults(context);
+            },
+          );
+        });
   }
 }

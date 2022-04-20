@@ -38,8 +38,12 @@ class _EvolvingImageState extends State<EvolvingImage> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             const SizedBox(height: 50),
-            Image.asset('assets/images/$numpuzzle$puz$_pezzo.png',
-                width: 320, height: 320),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              clipBehavior: Clip.antiAlias,
+              child: Image.asset('assets/images/$numpuzzle$puz$_pezzo.png',
+                  width: 320, height: 320),
+            ),
             const SizedBox(height: 50),
             ElevatedButton(
               child: Text('Check carbo status'),
@@ -112,14 +116,18 @@ class _EvolvingImageState extends State<EvolvingImage> {
                     showDialog(
                         context: context,
                         builder: (_) => AlertDialog(
-                            content: Text(
-                                'Peccato, non ci sono nuovi pezzi per te')));
+                                content: Text(
+                              'Ops! New pieces unavailable',
+                              textAlign: TextAlign.center,
+                            )));
                   } else {
                     showDialog(
                         context: context,
                         builder: (_) => AlertDialog(
-                            content: Text(
-                                'Hai già ricevuto un nuovo pezzo per oggi')));
+                                content: Text(
+                              'Be patient! You have already unlocked a new piece today',
+                              textAlign: TextAlign.center,
+                            )));
                   }
                 }
               },
