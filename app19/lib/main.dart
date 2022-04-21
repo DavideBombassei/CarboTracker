@@ -1,3 +1,4 @@
+import 'package:app19/others/profile.dart';
 import 'package:app19/others/carbohydrates.dart';
 import 'package:app19/screens/calendar.dart';
 import 'package:app19/screens/carbolist.dart';
@@ -79,8 +80,19 @@ class MyApp extends StatelessWidget {
         themeCollection: themeCollection,
         defaultThemeId: AppThemes.LightBlue,
         builder: (context, theme) {
-          return ChangeNotifierProvider<carbohydrates>(
-            create: (context) => carbohydrates(),
+          //return ChangeNotifierProvider<carbohydrates>(
+          //create: (context) => carbohydrates(),
+          //return ChangeNotifierProvider<Profile>(
+          //create: (context) => Profile(name: ' ', email: ' '),
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<carbohydrates>(
+                create: (context) => carbohydrates(),
+              ),
+              ChangeNotifierProvider<Profile>(
+                create: (context) => Profile(),
+              )
+            ],
             child: MaterialApp(
               theme: theme,
               initialRoute: 'login',
