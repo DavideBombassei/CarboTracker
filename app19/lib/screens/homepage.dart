@@ -2,6 +2,8 @@ import 'package:app19/others/drawerlist.dart';
 import 'package:app19/screens/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:app19/screens/pageviewdemo.dart';
+import 'package:app19/others/profile.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -51,11 +53,13 @@ class NavigationDrawer extends StatelessWidget {
             SizedBox(
               height: 12,
             ),
-            Text(
-              'Mario Rossi',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text('mario.rossi@gmail.com')
+            Consumer<Profile>(builder: (context, Profile, child) {
+              return Text('${profile.name}',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold));
+            }),
+            Consumer<Profile>(builder: (context, Profile, child) {
+              return Text('${profile.email}');
+            }),
           ],
         ),
       ),

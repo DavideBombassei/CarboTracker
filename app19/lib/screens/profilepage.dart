@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:app19/screens/carbolist.dart';
 import 'package:app19/others/profile.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   //Profile profile = Profile(name: 'mario', email: 'mario@gmail.com');
   @override
   Widget build(BuildContext context) {
@@ -14,76 +20,88 @@ class ProfilePage extends StatelessWidget {
         title: Text('Profile'),
         centerTitle: true,
       ),
-      body: Center(child: Consumer<Profile>(
-        builder: (context, Profile, child) {
-          return Text('${profile.name}');
-        },
-      )),
-      //Profile(),
+      body: _visualProfile(context),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.create),
           onPressed: () {
             Navigator.pushNamed(context, 'editprofile');
           }),
+
+      /*Center(child: Consumer<Profile>(
+        builder: (context, Profile, child) {
+          return Text('${profile.name}');
+        },
+      )),*/
     );
   }
 }
 
-/*class Profile extends StatefulWidget {
-  @override
-  State<Profile> createState() => _ProfileState();
+Widget _visualProfile(BuildContext context) {
+  //developer.log('LOG:${_editProfile.name}');
+  return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      //mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(height: 20),
+        AvatarGlow(
+          endRadius: 100.0,
+          child: Material(
+            // Replace this child with your own
+            elevation: 8.0,
+            shape: CircleBorder(),
+            child: CircleAvatar(
+              backgroundColor: Color.fromARGB(255, 192, 12, 12),
+              child: Image.asset('assets/images/logo.png',
+                  width: 400, height: 400),
+              radius: 60.0,
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        Column(children: [
+          Consumer<Profile>(builder: (context, Profile, child) {
+            return Text('Name: ${profile.name}',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24));
+          }),
+          const SizedBox(height: 30),
+          Consumer<Profile>(builder: (context, Profile, child) {
+            return Text('Email: ${profile.email}',
+                style: TextStyle(color: Colors.grey));
+          }),
+          const SizedBox(height: 30),
+          Consumer<Profile>(builder: (context, Profile, child) {
+            return profile.dateTime == null
+                ? Text('')
+                : Text(
+                    //'Birthday: ${DateFormat('yyyy-MM-dd').format(profile.dateTime)}',
+                    'Birthday: ${profile.dateTime}',
+                    style: TextStyle(color: Colors.grey));
+          }),
+          const SizedBox(height: 30),
+          Consumer<Profile>(builder: (context, Profile, child) {
+            return profile.height == null
+                ? Text('')
+                : Text('Height: ${profile.height}',
+                    style: TextStyle(color: Colors.grey));
+          }),
+          const SizedBox(height: 30),
+          Consumer<Profile>(builder: (context, Profile, child) {
+            return profile.weight == null
+                ? Text('')
+                : Text('Weight: ${profile.weight}',
+                    style: TextStyle(color: Colors.grey));
+          }),
+          //_moreInformation(context)
+        ]),
+      ]);
 }
 
-class _ProfileState extends State<Profile> {
-  void _addCarbo10() {
-    //funzione per aggiungere 10g
-    setState(() {
-      //carb += 10;
-    });
-  }
 
-  final _name = 'rossi';
-  final _email = 'mario.rossi@gmail.com';
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(27.0),
-        child: Consumer<Profile>(
-          builder: (context, cart, child) {
-            return Text('You have ${cart.products.length} items in your cart.');
-          },
-        )
-        /*Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            //mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AvatarGlow(
-                endRadius: 100.0,
-                child: Material(
-                  // Replace this child with your own
-                  elevation: 8.0,
-                  shape: CircleBorder(),
-                  child: CircleAvatar(
-                    backgroundColor: Color.fromARGB(255, 192, 12, 12),
-                    child: Image.asset('assets/images/logo.png',
-                        width: 400, height: 400),
-                    radius: 60.0,
-                  ),
-                ),
-              ),
-              Column(children: [
-                Text(
-                  '$_name',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                ),
-                const SizedBox(height: 30),
-                Text(
-                  '$_email',
-                  style: TextStyle(color: Colors.grey),
-                )
-              ]),
-            ])*/
-        );
-  }}*/
+/*floatingActionButton: widget.mealIndex == -1
+          ? null
+          : FloatingActionButton(
+              onPressed: () => _deleteAndPop(context),
+              child: Icon(Icons.delete),
+            ),*/
 
