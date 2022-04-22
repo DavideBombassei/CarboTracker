@@ -2,7 +2,7 @@ import 'package:app19/main.dart';
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:date_format/date_format.dart';
+//import 'package:date_format/date_format.dart';
 import 'package:app19/others/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:app19/screens/profilepage.dart';
@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 import 'dart:developer' as developer;
 
-Profile _editProfile = Profile(name: 'lUCA', email: '${profile.email}');
-//Profile profile = Profile(name: 'profile.name', email: 'mario.rossi@gmail.com');
+Profile _editProfile =
+    Profile(name: '${profile.name}', email: '${profile.email}');
 
 class EditProfile extends StatelessWidget {
   @override
@@ -62,8 +62,10 @@ class _EditProfileState extends State<EditProfileState> {
         ));
   }
 
-  TextEditingController _nameControll = TextEditingController();
-  TextEditingController _emailControll = TextEditingController();
+  TextEditingController _nameControll =
+      TextEditingController(text: profile.name);
+  TextEditingController _emailControll =
+      TextEditingController(text: profile.email);
 
   DateTime? _date = DateTime(2000, 1, 1);
   TextEditingController _weightControll = TextEditingController();
@@ -71,7 +73,6 @@ class _EditProfileState extends State<EditProfileState> {
 
   Widget _modifyProfile(BuildContext context) {
     //developer.log('LOG:${_editProfile.name}');
-
     final format = DateFormat("yyyy-MM-dd");
     return Form(
         key: _formKey,
@@ -85,14 +86,13 @@ class _EditProfileState extends State<EditProfileState> {
                   decoration: const InputDecoration(
                     icon: Icon(Icons.person),
                     hintText: 'Name *',
-                    //widget.mealIndex == -1 ? 'Carbohydrates *' : 'Carbohydrates *',
                     labelText: 'Insert your name: ',
                   ),
                   controller: _nameControll,
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return 'Please enter a name';
                     }
                     return null;
                   },
@@ -109,6 +109,7 @@ class _EditProfileState extends State<EditProfileState> {
                   ),
                   controller: _emailControll,
                   validator: (value) {
+                    if (!isValidEmail(value)) return 'Enter VALID email';
                     if (value == null || value.isEmpty) {
                       return 'Please enter some text';
                     }
@@ -119,7 +120,7 @@ class _EditProfileState extends State<EditProfileState> {
                   }),
               DateTimeField(
                   decoration: const InputDecoration(
-                    icon: Icon(Icons.alarm),
+                    icon: Icon(Icons.calendar_month),
                     hintText: 'yyyy-MM-dd *',
                     labelText: 'Insert your birthday',
                   ),
@@ -139,10 +140,31 @@ class _EditProfileState extends State<EditProfileState> {
                     }
                   },
                   onSaved: (value) {
-                    //_editProfile.birthday = DateFormat('yyyy-MM-dd').format(_date);;
-                    //DateFormat('dd-MM-yyyy').format(_date);
-
-                    _editProfile.dateTime = _date;
+                    if (value == null) {
+                      _editProfile.dateTime = profile.dateTime;
+                    } else {
+                      _editProfile.dateTime = _date;
+                    }
+                  }),
+              TextFormField(
+                  decoration: const InputDecoration(
+                    icon: Icon(Icons.height),
+                    hintText: 'Height *',
+                    labelText: 'Insert your height: ',
+                  ),
+                  controller: _heightControll,
+                  validator: (value) {
+                    if (value.toString().isNotEmpty) {
+                      if (!isValid(value.toString()))
+                        return 'Enter VALID height';
+                    }
+                  },
+                  onSaved: (value) {
+                    if (value == null || value.isEmpty) {
+                      _editProfile.height = profile.height;
+                    } else {
+                      _editProfile.height = double.parse(_heightControll.text);
+                    }
                   }),
               TextFormField(
                   decoration: const InputDecoration(
@@ -153,20 +175,18 @@ class _EditProfileState extends State<EditProfileState> {
                     labelText: 'Insert your weight: ',
                   ),
                   controller: _weightControll,
+                  validator: (value) {
+                    if (value.toString().isNotEmpty) {
+                      if (!isValid(value.toString()))
+                        return 'Enter VALID weight';
+                    }
+                  },
                   onSaved: (value) {
-                    _editProfile.weight = double.parse(_weightControll.text);
-                  }),
-              TextFormField(
-                  decoration: const InputDecoration(
-                    icon: Icon(
-                      Icons.height,
-                    ),
-                    hintText: 'Height *',
-                    labelText: 'Insert yourh height: ',
-                  ),
-                  controller: _heightControll,
-                  onSaved: (value) {
-                    _editProfile.height = double.parse(_heightControll.text);
+                    if (value == null || value.isEmpty) {
+                      _editProfile.weight = profile.weight;
+                    } else {
+                      _editProfile.weight = double.parse(_weightControll.text);
+                    }
                   }),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -193,13 +213,21 @@ class _EditProfileState extends State<EditProfileState> {
   void _saveChanges(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      //profile = _editProfile;
-      //setState(() {
       Provider.of<Profile>(context, listen: false).editProfile(_editProfile);
-      //});
     }
     //Then push the HomePage
     Navigator.pop(context);
-    //}
+  }
+
+  bool isValid(String? val) {
+    if (val == null) return false;
+    final regExp = RegExp(r"^[0-9]");
+    return regExp.hasMatch(val);
+  }
+
+  bool isValidEmail(String? val) {
+    if (val == null) return false;
+    final regExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    return regExp.hasMatch(val);
   }
 }

@@ -36,6 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
+String birthday = '';
 Widget _visualProfile(BuildContext context) {
   //developer.log('LOG:${_editProfile.name}');
   return Column(
@@ -71,11 +72,17 @@ Widget _visualProfile(BuildContext context) {
           }),
           const SizedBox(height: 30),
           Consumer<Profile>(builder: (context, Profile, child) {
+            //DateTime provDate = (DateTime) profile.dateTime;
+            //DateFormat('yyyy-MM-dd').format(provDate);
+            final format = DateFormat('dd-MM-yyyy');
+            if (profile.dateTime != null) {
+              birthday = format.format(profile.dateTime!);
+            }
             return profile.dateTime == null
                 ? Text('')
                 : Text(
                     //'Birthday: ${DateFormat('yyyy-MM-dd').format(profile.dateTime)}',
-                    'Birthday: ${profile.dateTime}',
+                    'Birthday: $birthday',
                     style: TextStyle(color: Colors.grey));
           }),
           const SizedBox(height: 30),
@@ -96,12 +103,3 @@ Widget _visualProfile(BuildContext context) {
         ]),
       ]);
 }
-
-
-/*floatingActionButton: widget.mealIndex == -1
-          ? null
-          : FloatingActionButton(
-              onPressed: () => _deleteAndPop(context),
-              child: Icon(Icons.delete),
-            ),*/
-

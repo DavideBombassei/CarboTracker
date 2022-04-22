@@ -60,6 +60,13 @@ class NavigationDrawer extends StatelessWidget {
             Consumer<Profile>(builder: (context, Profile, child) {
               return Text('${profile.email}');
             }),
+            Consumer<Profile>(builder: (context, Profile, child) {
+              return (profile.height == null || profile.weight == null)
+                  ? Text('')
+                  : Text(
+                      'BMI: ${((profile.weight!) / ((profile.height!) * (profile.height!))).toStringAsFixed(2)}',
+                      style: TextStyle(color: Colors.grey));
+            }),
           ],
         ),
       ),
