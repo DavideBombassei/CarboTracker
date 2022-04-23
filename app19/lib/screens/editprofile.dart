@@ -17,7 +17,7 @@ class EditProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Edit Profile'),
         centerTitle: true,
@@ -50,8 +50,8 @@ class _EditProfileState extends State<EditProfileState> {
                     elevation: 8.0,
                     shape: CircleBorder(),
                     child: CircleAvatar(
-                      backgroundColor: Color.fromARGB(255, 192, 12, 12),
-                      child: Image.asset('assets/images/logo.png',
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      child: Image.asset('assets/images/profile5.png',
                           width: 250, height: 250),
                       radius: 50.0,
                     ),
@@ -68,8 +68,10 @@ class _EditProfileState extends State<EditProfileState> {
       TextEditingController(text: profile.email);
 
   DateTime? _date = DateTime(2000, 1, 1);
-  TextEditingController _weightControll = TextEditingController();
-  TextEditingController _heightControll = TextEditingController();
+  TextEditingController _weightControll =
+      TextEditingController(text: profile.weight.toString());
+  TextEditingController _heightControll =
+      TextEditingController(text: profile.height.toString());
 
   Widget _modifyProfile(BuildContext context) {
     //developer.log('LOG:${_editProfile.name}');
@@ -79,8 +81,8 @@ class _EditProfileState extends State<EditProfileState> {
         child: Container(
           margin: new EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
+            //mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextFormField(
                   decoration: const InputDecoration(
@@ -119,6 +121,7 @@ class _EditProfileState extends State<EditProfileState> {
                     _editProfile.email = _emailControll.text;
                   }),
               DateTimeField(
+                  initialValue: profile.dateTime,
                   decoration: const InputDecoration(
                     icon: Icon(Icons.calendar_month),
                     hintText: 'yyyy-MM-dd *',
@@ -129,8 +132,8 @@ class _EditProfileState extends State<EditProfileState> {
                     final date = await showDatePicker(
                         context: context,
                         firstDate: DateTime(1900),
-                        initialDate: currentValue ?? DateTime.now(),
-                        lastDate: DateTime(2100));
+                        initialDate: DateTime(2000) ?? DateTime.now(),
+                        lastDate: DateTime.now());
                     _date = date;
                     return date;
                   },
@@ -147,6 +150,7 @@ class _EditProfileState extends State<EditProfileState> {
                     }
                   }),
               TextFormField(
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     icon: Icon(Icons.height),
                     hintText: 'Height *',
@@ -167,6 +171,7 @@ class _EditProfileState extends State<EditProfileState> {
                     }
                   }),
               TextFormField(
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     icon: Icon(
                       Icons.line_weight,

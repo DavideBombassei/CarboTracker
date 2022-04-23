@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 
-Profile profile = Profile(name: 'Anna Arnaudo', email: 'anna@gmail.com');
+Profile profile = Profile(
+    name: 'Anna Arnaudo',
+    email: 'anna.arnaudo@gmail.com',
+    dateTime: DateTime(2000, 1, 1),
+    weight: 62,
+    height: 1.62);
 
 class Profile extends ChangeNotifier {
   String? name;

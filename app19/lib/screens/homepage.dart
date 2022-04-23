@@ -46,7 +46,8 @@ class NavigationDrawer extends StatelessWidget {
         child: Column(
           children: [
             CircleAvatar(
-              child: Image.asset('assets/images/logo.png',
+              backgroundColor: Theme.of(context).colorScheme.background,
+              child: Image.asset('assets/images/profile5.png',
                   width: 250, height: 250),
               radius: 50.0,
             ),
@@ -60,12 +61,16 @@ class NavigationDrawer extends StatelessWidget {
             Consumer<Profile>(builder: (context, Profile, child) {
               return Text('${profile.email}');
             }),
+            SizedBox(
+              height: 12,
+            ),
             Consumer<Profile>(builder: (context, Profile, child) {
               return (profile.height == null || profile.weight == null)
                   ? Text('')
                   : Text(
                       'BMI: ${((profile.weight!) / ((profile.height!) * (profile.height!))).toStringAsFixed(2)}',
-                      style: TextStyle(color: Colors.grey));
+                      //style: TextStyle(color: Color.fromARGB(255, 61, 61, 61))
+                    );
             }),
           ],
         ),

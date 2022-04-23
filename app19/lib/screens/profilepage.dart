@@ -46,14 +46,15 @@ Widget _visualProfile(BuildContext context) {
       children: [
         const SizedBox(height: 20),
         AvatarGlow(
+          glowColor: Theme.of(context).colorScheme.primary,
           endRadius: 100.0,
           child: Material(
             // Replace this child with your own
             elevation: 8.0,
             shape: CircleBorder(),
             child: CircleAvatar(
-              backgroundColor: Color.fromARGB(255, 192, 12, 12),
-              child: Image.asset('assets/images/logo.png',
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: Image.asset('assets/images/profile5.png',
                   width: 400, height: 400),
               radius: 60.0,
             ),
@@ -62,13 +63,34 @@ Widget _visualProfile(BuildContext context) {
         const SizedBox(height: 20),
         Column(children: [
           Consumer<Profile>(builder: (context, Profile, child) {
-            return Text('Name: ${profile.name}',
+            return Text('${profile.name}',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24));
+          }),
+          const SizedBox(height: 10),
+          Consumer<Profile>(builder: (context, Profile, child) {
+            return Text('${profile.email}',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 121, 120, 120),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16));
           }),
           const SizedBox(height: 30),
           Consumer<Profile>(builder: (context, Profile, child) {
-            return Text('Email: ${profile.email}',
-                style: TextStyle(color: Colors.grey));
+            return (profile.height == null || profile.weight == null)
+                ? Text('')
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      buildButton(context, '${profile.height}', 'Height'),
+                      buildDivider(context),
+                      buildButton(context, '${profile.weight}', 'Weight'),
+                      buildDivider(context),
+                      buildButton(
+                          context,
+                          '${((profile.weight!) / ((profile.height!) * (profile.height!))).toStringAsFixed(2)}',
+                          'BMI'),
+                    ],
+                  );
           }),
           const SizedBox(height: 30),
           Consumer<Profile>(builder: (context, Profile, child) {
@@ -80,21 +102,39 @@ Widget _visualProfile(BuildContext context) {
             }
             return profile.dateTime == null
                 ? Text('')
-                : Text(
-                    //'Birthday: ${DateFormat('yyyy-MM-dd').format(profile.dateTime)}',
-                    'Birthday: $birthday',
-                    style: TextStyle(color: Colors.grey));
+                : Container(
+                    width: 290,
+                    height: 70,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 2),
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Theme.of(context).colorScheme.background,
+                          offset: new Offset(6.0, 6.0),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.cake),
+                          Text(
+                              //'Birthday: ${DateFormat('yyyy-MM-dd').format(profile.dateTime)}',
+                              '    $birthday',
+                              style: TextStyle(fontSize: 14))
+                        ]));
           }),
-          const SizedBox(height: 30),
           Consumer<Profile>(builder: (context, Profile, child) {
-            return profile.height == null
+            return profile.height == null || profile.weight != null
                 ? Text('')
                 : Text('Height: ${profile.height}',
                     style: TextStyle(color: Colors.grey));
           }),
           const SizedBox(height: 30),
           Consumer<Profile>(builder: (context, Profile, child) {
-            return profile.weight == null
+            return profile.weight == null || profile.height != null
                 ? Text('')
                 : Text('Weight: ${profile.weight}',
                     style: TextStyle(color: Colors.grey));
@@ -103,3 +143,35 @@ Widget _visualProfile(BuildContext context) {
         ]),
       ]);
 }
+//PER PRENDERE SPUNTO E FARLO PIU CARINO
+//https://github.com/JohannesMilke/user_profile_ii_example/blob/master/lib/widget/numbers_widget.dart
+
+Widget buildDivider(BuildContext context) => Container(
+      height: 24,
+      child: VerticalDivider(
+        color: Theme.of(context).colorScheme.primary,
+        thickness: 2,
+      ),
+    );
+
+Widget buildButton(BuildContext context, String value, String text) =>
+    MaterialButton(
+      padding: EdgeInsets.symmetric(vertical: 4),
+      onPressed: () {},
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            value,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          SizedBox(height: 2),
+          Text(
+            text,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
