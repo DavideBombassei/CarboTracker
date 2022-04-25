@@ -132,7 +132,7 @@ class _EditProfileState extends State<EditProfileState> {
                     final date = await showDatePicker(
                         context: context,
                         firstDate: DateTime(1900),
-                        initialDate: DateTime(2000) ?? DateTime.now(),
+                        initialDate: DateTime(2000),
                         lastDate: DateTime.now());
                     _date = date;
                     return date;
