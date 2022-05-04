@@ -59,6 +59,7 @@ class _EvolvingImageState extends State<EvolvingImage> {
             ),
             const SizedBox(height: 50),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   child: Text('Check carbo status'),
@@ -75,7 +76,8 @@ class _EvolvingImageState extends State<EvolvingImage> {
                       showDialog(
                           context: context,
                           builder: (_) => AlertDialog(
-                                insetPadding: EdgeInsets.symmetric(horizontal: 40),
+                                insetPadding:
+                                    EdgeInsets.symmetric(horizontal: 40),
                                 backgroundColor: Colors.transparent,
                                 //insetPadding: EdgeInsets.all(30),
                                 content: Stack(
@@ -86,9 +88,10 @@ class _EvolvingImageState extends State<EvolvingImage> {
                                         //width: double.infinity,
                                         height: 170,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(15),
-                                            color:
-                                                Color.fromARGB(255, 255, 255, 255)),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255)),
                                         padding:
                                             EdgeInsets.fromLTRB(20, 50, 20, 20),
                                         child: Column(
@@ -114,7 +117,8 @@ class _EvolvingImageState extends State<EvolvingImage> {
                                 actions: <Widget>[
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
                                     children: [
                                       SizedBox(
                                         width: 100,
@@ -149,7 +153,8 @@ class _EvolvingImageState extends State<EvolvingImage> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
                     await prefs.clear();
                   },
                   child: Text('delete saved data'),
@@ -216,21 +221,23 @@ class _EvolvingImageState extends State<EvolvingImage> {
   }
 }
 
-Future<int> getpezzo() async{
+Future<int> getpezzo() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final _pezzo = prefs.getInt('_pezzo') ?? 1;
   return _pezzo;
 }
+
 Future savepezzo() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setInt('_pezzo', _pezzo);
 }
 
-Future<int> getpuzzle() async{
+Future<int> getpuzzle() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final numpuzzle = prefs.getInt('numpuzzle') ?? 1;
   return numpuzzle;
 }
+
 Future savepuzzle() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setInt('numpuzzle', numpuzzle);
