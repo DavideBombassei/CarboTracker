@@ -29,11 +29,11 @@ class DrawerList extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             onTap: () {
-              Navigator.pushNamed(context, 'carbolist');
+              Navigator.pushNamed(context, 'carbolistUpdate');
             },
             trailing: IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'carbolist');
+                  Navigator.pushNamed(context, 'carbolistUpdate');
                 },
                 icon: Icon(Icons.arrow_right)),
           ),
