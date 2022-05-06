@@ -1,7 +1,7 @@
 import 'package:app19/others/profile.dart';
 import 'package:app19/others/carbohydrates.dart';
 import 'package:app19/screens/calendar.dart';
-import 'package:app19/screens/carbolist.dart';
+import 'package:app19/screens/carbolistUpdate.dart';
 import 'package:app19/screens/editprofile.dart';
 import 'package:app19/screens/profilepage.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +101,7 @@ class MyApp extends StatelessWidget {
                 'home': (context) => HomePage(),
                 'calendar': (context) => Calendar(),
                 'settings': (context) => Settings(title: 'Settings'),
-                'carbolist': (context) => CarboList(),
+                'carbolistUpdate': (context) => CarboListUpdate(),
                 'profilepage': (context) => ProfilePage(),
                 'editprofile': (context) => EditProfile(),
                 'info': (context) => InfoPage(),
