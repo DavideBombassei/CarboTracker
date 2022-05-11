@@ -1,5 +1,6 @@
 import 'dart:math';
-
+import 'dart:async';
+import 'package:fitbitter/fitbitter.dart';
 import 'package:app19/others/carbohydrates.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,16 +13,27 @@ class CarboCounter extends StatefulWidget {
 }
 
 class _CarboCounterState extends State<CarboCounter> {
+
   List<String> phrases = [
-    'Solo chi rischia di andare troppo lontano avrà la possibilità di scoprire quanto lontano si può andare',
+    //'Solo chi rischia di andare troppo lontano avrà la possibilità di scoprire quanto lontano si può andare',
     'Se non credi in te stesso, nessuno lo farà per te',
     'Quando ti dicono che non puoi farcela, ti stanno mostrando i loro limiti, non i tuoi',
-    'Senza ambizione non si inizia nulla. Senza lavoro non si finisce nulla. Il successo non ti verrà regalato. Devi conquistarlo',
+    //'Senza ambizione non si inizia nulla. Senza lavoro non si finisce nulla. Il successo non ti verrà regalato. Devi conquistarlo',
     'La vita è per il 10% cosa ti accade e per il 90% come reagisci'
   ];
 
   @override
   Widget build(BuildContext context) {
+
+    //double? stepsValue = 0;
+
+    //Timer mytimer = Timer.periodic(Duration(minutes:1), (timer) async{
+      //double? temp = await getSteps();
+      //setState(() {
+        //stepsValue = temp;
+      //});
+    //});
+
     return Padding(
       padding: EdgeInsets.only(top: 30.0),
       child: Column(children: [
@@ -47,6 +59,7 @@ class _CarboCounterState extends State<CarboCounter> {
           height: 200,
           width: 200,
         ),
+        Text('I tuoi passi di oggi ammontano a: '),
         Container(
           color: Colors.amber,
         ),
@@ -131,4 +144,23 @@ class _CarboCounterState extends State<CarboCounter> {
       ]),
     );
   }
+}
+
+Future<double?> getSteps() async{
+  FitbitActivityTimeseriesDataManager
+      fitbitActivityTimeseriesDataManager =
+      FitbitActivityTimeseriesDataManager(
+          clientID: '238CL6',
+          clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
+          type: 'steps', 
+      );
+  final stepsData = await fitbitActivityTimeseriesDataManager.fetch(
+    FitbitActivityTimeseriesAPIURL.dayWithResource(
+        date: DateTime.now().subtract(Duration(days: 0)),
+        userID: '7ML2XV',
+        resource: fitbitActivityTimeseriesDataManager.type,
+        )
+    ) as List<FitbitActivityTimeseriesData>;
+  print(stepsData);
+  return stepsData[0].value;
 }

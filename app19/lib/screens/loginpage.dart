@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fitbitter/fitbitter.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -45,12 +46,19 @@ class _LoginDemoState extends State<LoginDemo> {
           ),
           ElevatedButton(
             child: Text('Submit'),
-            onPressed: () {
+            onPressed: () async{
               //if (_usercontroller.value.text == 'anna_arnaudo' && _pswcontroller.value.text == 'Biowrbl19'){
               if (_usercontroller.value.text == '' &&
                   _pswcontroller.value.text == '') {
                 Navigator.pushNamed(context, 'home');
-              } else {
+                String? userId = await FitbitConnector.authorize(
+                  context: context,
+                  clientID: '238CL6',
+                  clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
+                  redirectUri: 'example://fitbit/auth',
+                  callbackUrlScheme: 'example');
+              } 
+              else {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text('Wrong credentials')));
               }
