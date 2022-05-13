@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
               routes: {
                 'login': (context) => LoginPage(),
                 'home': (context) => HomePage(),
-                'calendar': (context) => Calendar(),
+                //'calendar': (context) => Calendar(),
                 'settings': (context) => Settings(title: 'Settings'),
                 'carbolistUpdate': (context) => CarboListUpdate(),
                 'profilepage': (context) => ProfilePage(),

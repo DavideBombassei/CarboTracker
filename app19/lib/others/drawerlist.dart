@@ -37,7 +37,7 @@ class DrawerList extends StatelessWidget {
                 },
                 icon: Icon(Icons.arrow_right)),
           ),
-          ListTile(
+          /*ListTile(
             leading: const Icon(Icons.calendar_month),
             title: const Text(
               'Calendar',
@@ -51,7 +51,7 @@ class DrawerList extends StatelessWidget {
                   Navigator.pushNamed(context, 'calendar');
                 },
                 icon: const Icon(Icons.arrow_right)),
-          ),
+          ),*/
           ListTile(
             leading: const Icon(Icons.settings),
             title: const Text(

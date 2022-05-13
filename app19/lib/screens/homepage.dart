@@ -4,8 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:app19/screens/pageviewdemo.dart';
 import 'package:app19/others/profile.dart';
 import 'package:provider/provider.dart';
+import 'package:app19/screens/carbocounter.dart';
 
-class HomePage extends StatelessWidget {
+double? num_steps;
+
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,6 +21,17 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('HomePage'),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {
+                setState(() async {
+                  double? steps = await getSteps();
+                  num_steps = steps;
+                  print(steps);
+                });
+              },
+              icon: Icon(Icons.refresh))
+        ],
       ),
       body: PageViewDemo(),
     );

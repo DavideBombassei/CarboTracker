@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'dart:async';
+import 'package:app19/others/numsteps.dart';
 import 'package:fitbitter/fitbitter.dart';
 import 'package:app19/others/carbohydrates.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:app19/screens/homepage.dart';
 
 class CarboCounter extends StatefulWidget {
   @override
@@ -13,7 +15,6 @@ class CarboCounter extends StatefulWidget {
 }
 
 class _CarboCounterState extends State<CarboCounter> {
-
   List<String> phrases = [
     //'Solo chi rischia di andare troppo lontano avrà la possibilità di scoprire quanto lontano si può andare',
     'Se non credi in te stesso, nessuno lo farà per te',
@@ -24,14 +25,13 @@ class _CarboCounterState extends State<CarboCounter> {
 
   @override
   Widget build(BuildContext context) {
-
     //double? stepsValue = 0;
 
     //Timer mytimer = Timer.periodic(Duration(minutes:1), (timer) async{
-      //double? temp = await getSteps();
-      //setState(() {
-        //stepsValue = temp;
-      //});
+    //double? temp = await getSteps();
+    //setState(() {
+    //stepsValue = temp;
+    //});
     //});
 
     return Padding(
@@ -47,22 +47,31 @@ class _CarboCounterState extends State<CarboCounter> {
         SizedBox(
           height: 80,
         ),
-        SizedBox(
-          child:
-              Consumer<carbohydrates>(builder: (context, carbohydrates, child) {
-            return CircularProgressIndicator(
-              backgroundColor: Theme.of(context).secondaryHeaderColor,
-              value: carbgrams,
-              strokeWidth: 30,
-            );
-          }),
-          height: 200,
-          width: 200,
-        ),
-        Text('I tuoi passi di oggi ammontano a: '),
-        Container(
-          color: Colors.amber,
-        ),
+        Stack(children: [
+          SizedBox(
+            child: Consumer<carbohydrates>(
+                builder: (context, carbohydrates, child) {
+              return CircularProgressIndicator(
+                backgroundColor: Theme.of(context).secondaryHeaderColor,
+                value: carbgrams,
+                strokeWidth: 30,
+              );
+            }),
+            height: 200,
+            width: 200,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 74),
+            child: Text(
+              '$num_steps',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 86, horizontal: 44),
+            child: Icon(Icons.run_circle_outlined),
+          )
+        ]),
         /*Container(
           child: Stack(
             clipBehavior: Clip.none,
@@ -146,21 +155,19 @@ class _CarboCounterState extends State<CarboCounter> {
   }
 }
 
-Future<double?> getSteps() async{
-  FitbitActivityTimeseriesDataManager
-      fitbitActivityTimeseriesDataManager =
+Future<double?> getSteps() async {
+  FitbitActivityTimeseriesDataManager fitbitActivityTimeseriesDataManager =
       FitbitActivityTimeseriesDataManager(
-          clientID: '238CL6',
-          clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
-          type: 'steps', 
-      );
-  final stepsData = await fitbitActivityTimeseriesDataManager.fetch(
-    FitbitActivityTimeseriesAPIURL.dayWithResource(
-        date: DateTime.now().subtract(Duration(days: 0)),
-        userID: '7ML2XV',
-        resource: fitbitActivityTimeseriesDataManager.type,
-        )
-    ) as List<FitbitActivityTimeseriesData>;
+    clientID: '238CL6',
+    clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
+    type: 'steps',
+  );
+  final stepsData = await fitbitActivityTimeseriesDataManager
+      .fetch(FitbitActivityTimeseriesAPIURL.dayWithResource(
+    date: DateTime.now().subtract(Duration(days: 0)),
+    userID: '7ML2XV',
+    resource: fitbitActivityTimeseriesDataManager.type,
+  )) as List<FitbitActivityTimeseriesData>;
   print(stepsData);
   return stepsData[0].value;
 }

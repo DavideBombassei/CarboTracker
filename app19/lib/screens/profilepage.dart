@@ -1,7 +1,6 @@
 import 'package:app19/main.dart';
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:app19/screens/carbolist.dart';
 import 'package:app19/others/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
