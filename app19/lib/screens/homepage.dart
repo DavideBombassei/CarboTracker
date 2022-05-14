@@ -1,4 +1,5 @@
 import 'package:app19/others/drawerlist.dart';
+import 'package:app19/others/numcal.dart';
 import 'package:app19/others/numsteps.dart';
 import 'package:flutter/material.dart';
 import 'package:app19/screens/pageviewdemo.dart';
@@ -6,6 +7,7 @@ import 'package:app19/others/profile.dart';
 import 'package:provider/provider.dart';
 
 double? num_steps;
+double? num_cal;
 
 class HomePage extends StatefulWidget {
   @override
@@ -27,6 +29,9 @@ class _HomePageState extends State<HomePage> {
                   Provider.of<numsteps>(context, listen: false)
                       .stepsUpdate(num_steps);
                   print(steps_update);
+                  Provider.of<numcal>(context, listen: false)
+                      .CalUpdate(num_cal);
+                  print(cal_update);
                 });
 
                 /*async {

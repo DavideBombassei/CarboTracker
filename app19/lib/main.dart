@@ -1,3 +1,4 @@
+import 'package:app19/others/numcal.dart';
 import 'package:app19/others/numsteps.dart';
 import 'package:app19/others/profile.dart';
 import 'package:app19/others/carbohydrates.dart';
@@ -94,6 +95,9 @@ class MyApp extends StatelessWidget {
               ),
               ChangeNotifierProvider<numsteps>(
                 create: (context) => numsteps(),
+              ),
+              ChangeNotifierProvider<numcal>(
+                create: (context) => numcal(),
               ),
             ],
             child: MaterialApp(

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:async';
+import 'package:app19/others/numcal.dart';
 import 'package:app19/others/numsteps.dart';
 import 'package:fitbitter/fitbitter.dart';
 import 'package:app19/others/carbohydrates.dart';
@@ -83,10 +84,31 @@ class _CarboCounterState extends State<CarboCounter> {
               Icons.run_circle_outlined,
               size: 30,
             ),
-          )
+          ),
+          Consumer<numcal>(
+            builder: (context, value, child) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: infoposition_y + 100,
+                    horizontal: infoposition_x + adjuster_x),
+                child: Text(
+                  '$cal_update',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              );
+            },
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: infoposition_y + 70, horizontal: infoposition_x + 14),
+            child: Icon(
+              Icons.bolt,
+              size: 30,
+            ),
+          ),
         ]),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 40),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
           child: DefaultTextStyle(
             style: GoogleFonts.reenieBeanie(
                 fontSize: 28.0, color: Theme.of(context).unselectedWidgetColor),
@@ -98,7 +120,7 @@ class _CarboCounterState extends State<CarboCounter> {
               ),
             ]),
           ),
-        )
+        ),
       ]),
     );
   }
@@ -119,4 +141,21 @@ Future<double?> getSteps() async {
   )) as List<FitbitActivityTimeseriesData>;
   print(stepsData);
   return stepsData[0].value;
+}
+
+Future<double?> getCal() async {
+  FitbitActivityTimeseriesDataManager fitbitActivityTimeseriesDataManager =
+      FitbitActivityTimeseriesDataManager(
+    clientID: '238CL6',
+    clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
+    type: 'calories',
+  );
+  final calData = await fitbitActivityTimeseriesDataManager
+      .fetch(FitbitActivityTimeseriesAPIURL.dayWithResource(
+    date: DateTime.now().subtract(Duration(days: 0)),
+    userID: '7ML2XV',
+    resource: fitbitActivityTimeseriesDataManager.type,
+  )) as List<FitbitActivityTimeseriesData>;
+  print(calData);
+  return calData[0].value;
 }
