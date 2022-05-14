@@ -1,10 +1,9 @@
 import 'package:app19/others/drawerlist.dart';
-import 'package:app19/screens/profilepage.dart';
+import 'package:app19/others/numsteps.dart';
 import 'package:flutter/material.dart';
 import 'package:app19/screens/pageviewdemo.dart';
 import 'package:app19/others/profile.dart';
 import 'package:provider/provider.dart';
-import 'package:app19/screens/carbocounter.dart';
 
 double? num_steps;
 
@@ -24,11 +23,17 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
               onPressed: () {
-                setState(() async {
+                setState(() {
+                  Provider.of<numsteps>(context, listen: false)
+                      .stepsUpdate(num_steps);
+                  print(steps_update);
+                });
+
+                /*async {
                   double? steps = await getSteps();
                   num_steps = steps;
                   print(steps);
-                });
+                });*/
               },
               icon: Icon(Icons.refresh))
         ],

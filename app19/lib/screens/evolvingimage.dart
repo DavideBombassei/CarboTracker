@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

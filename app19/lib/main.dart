@@ -1,6 +1,6 @@
+import 'package:app19/others/numsteps.dart';
 import 'package:app19/others/profile.dart';
 import 'package:app19/others/carbohydrates.dart';
-import 'package:app19/screens/calendar.dart';
 import 'package:app19/screens/carbolistUpdate.dart';
 import 'package:app19/screens/editprofile.dart';
 import 'package:app19/screens/profilepage.dart';
@@ -91,7 +91,10 @@ class MyApp extends StatelessWidget {
               ),
               ChangeNotifierProvider<Profile>(
                 create: (context) => Profile(),
-              )
+              ),
+              ChangeNotifierProvider<numsteps>(
+                create: (context) => numsteps(),
+              ),
             ],
             child: MaterialApp(
               theme: theme,

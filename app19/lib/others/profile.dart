@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 
 Profile profile = Profile(
     name: 'Anna Arnaudo',

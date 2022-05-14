@@ -1,13 +1,10 @@
-import 'package:app19/main.dart';
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 //import 'package:date_format/date_format.dart';
 import 'package:app19/others/profile.dart';
 import 'package:intl/intl.dart';
-import 'package:app19/screens/profilepage.dart';
 import 'package:provider/provider.dart';
-import 'dart:io';
 import 'dart:developer' as developer;
 
 Profile _editProfile =
