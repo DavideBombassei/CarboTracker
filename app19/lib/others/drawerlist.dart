@@ -8,21 +8,6 @@ class DrawerList extends StatelessWidget {
         runSpacing: 4,
         children: [
           ListTile(
-            leading: const Icon(Icons.portrait_outlined),
-            title: const Text(
-              'Profile',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, 'profilepage');
-            },
-            trailing: IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'profilepage');
-                },
-                icon: Icon(Icons.arrow_right)),
-          ),
-          ListTile(
             leading: const Icon(Icons.addchart_rounded),
             title: const Text(
               'Carbo-List',
@@ -53,9 +38,9 @@ class DrawerList extends StatelessWidget {
                 icon: const Icon(Icons.arrow_right)),
           ),*/
           ListTile(
-            leading: const Icon(Icons.settings),
+            leading: const Icon(Icons.portrait_outlined),
             title: const Text(
-              'Settings',
+              'Profile',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             onTap: () {
@@ -84,16 +69,6 @@ class DrawerList extends StatelessWidget {
                   Navigator.pushNamed(context, 'info');
                 },
                 icon: Icon(Icons.arrow_right)),
-          ),
-          ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text(
-              'Logout',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, 'login');
-            },
           ),
         ],
       ),

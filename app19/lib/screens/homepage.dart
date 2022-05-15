@@ -1,3 +1,4 @@
+import 'package:app19/others/carbohydrates.dart';
 import 'package:app19/others/drawerlist.dart';
 import 'package:app19/others/numcal.dart';
 import 'package:app19/others/numsteps.dart';
@@ -29,8 +30,10 @@ class _HomePageState extends State<HomePage> {
                   Provider.of<numsteps>(context, listen: false)
                       .stepsUpdate(num_steps);
                   print(steps_update);
-                  Provider.of<numcal>(context, listen: false)
-                      .CalUpdate(num_cal);
+                  Provider.of<numcal>(context, listen: false).CalUpdate();
+                  print(cal_update);
+                  Provider.of<carbohydrates>(context, listen: false)
+                      .CarboRefresh();
                   print(cal_update);
                 });
 
@@ -40,7 +43,12 @@ class _HomePageState extends State<HomePage> {
                   print(steps);
                 });*/
               },
-              icon: Icon(Icons.refresh))
+              icon: Icon(Icons.refresh)),
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context, 'login');
+              },
+              icon: Icon(Icons.logout)),
         ],
       ),
       body: PageViewDemo(),

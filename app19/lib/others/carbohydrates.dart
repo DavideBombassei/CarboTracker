@@ -1,14 +1,16 @@
+import 'package:app19/others/numcal.dart';
 import 'package:flutter/material.dart';
 
 double carbgrams = 0;
 
-class carbohydrates extends ChangeNotifier{
-
-  void addcarbo(int carb, int lim, double carbperc){
-
+class carbohydrates extends ChangeNotifier {
+  void addcarbo(int carb, int lim, double carbperc) {
     carbgrams = carbgrams + ((carb * carbperc) / lim);
     notifyListeners();
-
   }
 
+  void CarboRefresh() {
+    carbgrams = carbgrams;
+    notifyListeners();
+  }
 }

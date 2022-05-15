@@ -44,11 +44,11 @@ class _EvolvingImageState extends State<EvolvingImage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
-            Text(
+            const SizedBox(height: 46),
+            /*Text(
               'Puzzle',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
+            ),*/
             const SizedBox(height: 50),
             ClipRRect(
               borderRadius: BorderRadius.circular(50),

@@ -1,14 +1,30 @@
+import 'package:app19/others/carbohydrates.dart';
+import 'package:app19/screens/carbolistUpdate.dart';
 import 'package:flutter/material.dart';
-
 import '../screens/carbocounter.dart';
 
 double? cal_update = 0.0;
+double? cal_carbocounter = 0.0;
+double? cal_carbocounter_static = 0.0;
 
 class numcal extends ChangeNotifier {
-  void CalUpdate(double? num_cal) async {
+  void CalUpdate() async {
     double? cal = await getCal();
     cal_update = cal;
 
+    cal_carbocounter =
+        (((cal_update! * 0.33) / 4) / lim) - cal_carbocounter_static!;
+    cal_carbocounter_static = cal_carbocounter_static! + cal_carbocounter!;
+    print('Calstatic $cal_carbocounter_static');
+
+// Da controllare questi if (ragionamento)
+    if (carbgrams > 0) {
+      carbgrams = carbgrams - cal_carbocounter!;
+    } else if (carbgrams < cal_carbocounter!) {
+      carbgrams = 0;
+    }
+
+    print('Carb bruciati $cal_carbocounter');
     notifyListeners();
     if (cal_update! < 10) {
       adjuster_x = 15;

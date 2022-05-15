@@ -41,13 +41,13 @@ class _CarboCounterState extends State<CarboCounter> {
     return Padding(
       padding: EdgeInsets.only(top: 30.0),
       child: Column(children: [
-        Text(
+        /*Text(
           'CarboCounter',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
-        ),
+        ),*/
         SizedBox(
           height: 80,
         ),
@@ -72,7 +72,10 @@ class _CarboCounterState extends State<CarboCounter> {
                     horizontal: infoposition_x + adjuster_x),
                 child: Text(
                   '$steps_update',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Theme.of(context).unselectedWidgetColor),
                 ),
               );
             },
@@ -83,6 +86,7 @@ class _CarboCounterState extends State<CarboCounter> {
             child: Icon(
               Icons.run_circle_outlined,
               size: 30,
+              color: Theme.of(context).unselectedWidgetColor,
             ),
           ),
           Consumer<numcal>(
@@ -93,7 +97,10 @@ class _CarboCounterState extends State<CarboCounter> {
                     horizontal: infoposition_x + adjuster_x),
                 child: Text(
                   '$cal_update',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Theme.of(context).unselectedWidgetColor),
                 ),
               );
             },
@@ -102,8 +109,9 @@ class _CarboCounterState extends State<CarboCounter> {
             padding: EdgeInsets.symmetric(
                 vertical: infoposition_y + 70, horizontal: infoposition_x + 14),
             child: Icon(
-              Icons.bolt,
+              Icons.local_fire_department,
               size: 30,
+              color: Theme.of(context).unselectedWidgetColor,
             ),
           ),
         ]),
