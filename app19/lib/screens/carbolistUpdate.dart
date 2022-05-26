@@ -18,6 +18,7 @@ class Item {
   final Widget? body;
   bool isExpanded;
   double carbperc;
+  int index;
 
   Item({
     //required this.expandedValue,
@@ -25,15 +26,16 @@ class Item {
     this.body,
     this.isExpanded = false,
     required this.carbperc,
+    required this.index,
   });
 }
 
 class _CarboListUpdateState extends State<CarboListUpdate> {
   List<Item> items = <Item>[
-    Item(header: 'Bread', carbperc: 0.6),
-    Item(header: 'Candies', carbperc: 0.9),
-    Item(header: 'Chocolate', carbperc: 0.5),
-    Item(header: 'Corn', carbperc: 0.75),
+    Item(header: 'Bread', carbperc: 0.6, index: 1),
+    Item(header: 'Candies', carbperc: 0.9, index: 2),
+    Item(header: 'Chocolate', carbperc: 0.5, index: 3),
+    /* Item(header: 'Corn', carbperc: 0.75),
     Item(header: 'Corn-Flakes', carbperc: 0.9),
     Item(header: 'Croissant', carbperc: 0.55),
     Item(header: 'Dried Fruit', carbperc: 0.7),
@@ -50,7 +52,7 @@ class _CarboListUpdateState extends State<CarboListUpdate> {
     Item(header: 'Pizza', carbperc: 0.6),
     Item(header: 'Rice', carbperc: 0.8),
     Item(header: 'Sugar', carbperc: 1),
-    Item(header: 'Vegetables', carbperc: 0.07),
+    Item(header: 'Vegetables', carbperc: 0.07),*/
   ];
 
   void _addCarbo10() {
@@ -100,7 +102,7 @@ class _CarboListUpdateState extends State<CarboListUpdate> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                  body: _CarbCalculator(item.carbperc)))
+                  body: _CarbCalculator(item.carbperc, item.index)))
               .toList(),
           expansionCallback: (panelIndex, isExpanded) {
             setState(() {
@@ -112,7 +114,7 @@ class _CarboListUpdateState extends State<CarboListUpdate> {
     );
   }
 
-  Widget _CarbCalculator(carbperc) {
+  Widget _CarbCalculator(carbperc, i) {
     return Column(
       children: [
         Row(
@@ -183,6 +185,7 @@ class _CarboListUpdateState extends State<CarboListUpdate> {
               height: 40,
               width: 50,
               child: FloatingActionButton(
+                heroTag: "btn$i",
                 onPressed: () {
                   setState(() {
                     Provider.of<carbohydrates>(context, listen: false)
