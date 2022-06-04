@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:app19/screens/pageviewdemo.dart';
 import 'package:app19/others/profile.dart';
 import 'package:provider/provider.dart';
-
-double? num_steps;
-double? num_cal;
+import 'package:app19/repository/databaseRepository.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,23 +23,23 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-              onPressed: () {
-                setState(() {
-                  Provider.of<numsteps>(context, listen: false)
-                      .stepsUpdate(num_steps);
-                  print(steps_update);
-                  Provider.of<numcal>(context, listen: false).CalUpdate();
-                  print(cal_update);
-                  Provider.of<carbohydrates>(context, listen: false)
-                      .CarboRefresh();
-                  print(cal_update);
-                });
+              onPressed: () async{
+                await Provider.of<numsteps>(context, listen: false).stepsUpdate();
+                print(steps_update);
+                await Provider.of<numcal>(context, listen: false).CalUpdate();
+                print(cal_update);
+                await Provider.of<carbohydrates>(context, listen: false).CarboRefresh();
+                print(cal_update);
 
-                /*async {
-                  double? steps = await getSteps();
-                  num_steps = steps;
-                  print(steps);
-                });*/
+
+                DateTime temp = DateTime.now();
+                String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
+                await Provider.of<DatabaseRepository>(context,listen: false).update_fitbitSteps(steps_update ?? 0, dataString);
+                await Provider.of<DatabaseRepository>(context,listen: false).update_fitbitCals(cal_update ?? 0, dataString);
+
+                setState(() {
+                  
+                });
               },
               icon: Icon(Icons.refresh)),
           IconButton(

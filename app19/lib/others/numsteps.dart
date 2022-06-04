@@ -4,7 +4,7 @@ import '../screens/carbocounter.dart';
 double? steps_update = 0.0;
 
 class numsteps extends ChangeNotifier {
-  void stepsUpdate(double? num_steps) async {
+  Future stepsUpdate() async {
     double? steps = await getSteps();
     steps_update = steps;
 

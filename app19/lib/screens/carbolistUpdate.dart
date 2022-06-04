@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app19/others/carbohydrates.dart';
 import 'package:provider/provider.dart';
 
-int carb = 0; //da sistemare
+int carb = 0;
 double buttondim = 60; //dimensione bottoni +-10 +-1
 int lim =
     500; //limite giornaliero carboidrati per normalizzare entro [0,1] perchè richiesto dall'indicatore

@@ -8,7 +8,7 @@ double? cal_carbocounter = 0.0;
 double? cal_carbocounter_static = 0.0;
 
 class numcal extends ChangeNotifier {
-  void CalUpdate() async {
+  Future CalUpdate() async {
     double? cal = await getCal();
     cal_update = cal;
 

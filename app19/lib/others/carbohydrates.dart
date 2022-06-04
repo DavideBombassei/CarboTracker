@@ -9,7 +9,7 @@ class carbohydrates extends ChangeNotifier {
     notifyListeners();
   }
 
-  void CarboRefresh() {
+  Future CarboRefresh() async{
     carbgrams = carbgrams;
     notifyListeners();
   }

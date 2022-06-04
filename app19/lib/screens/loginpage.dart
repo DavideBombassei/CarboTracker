@@ -1,5 +1,8 @@
+import 'package:app19/database/entities/carboEntity.dart';
 import 'package:flutter/material.dart';
 import 'package:fitbitter/fitbitter.dart';
+import 'package:app19/repository/databaseRepository.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -57,6 +60,16 @@ class _LoginDemoState extends State<LoginDemo> {
                   clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
                   redirectUri: 'example://fitbit/auth',
                   callbackUrlScheme: 'example');
+                DateTime temp = DateTime.now();
+                String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
+                carboEntity? check = await Provider.of<DatabaseRepository>(context,listen: false).check_carboEntity(dataString);
+                if (check == null){
+                  await Provider.of<DatabaseRepository>(context,listen: false).insert_carboEntity(carboEntity(null, dataString, 0, 0, 0));
+                  print('Memorizzando il giorno...');
+                }
+                else{
+                  print('Giorno già memorizzato');
+                }
               } 
               else {
                 ScaffoldMessenger.of(context)

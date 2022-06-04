@@ -1,3 +1,4 @@
+import 'package:app19/database/entities/carboEntity.dart';
 import 'package:app19/others/numcal.dart';
 import 'package:app19/others/numsteps.dart';
 import 'package:app19/others/profile.dart';
@@ -11,9 +12,28 @@ import 'package:app19/screens/homepage.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:app19/repository/databaseRepository.dart';
+import 'package:app19/database/database.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async{
+
+  //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine. 
+  //This is needed when you need to interact with the native core of the app.
+  //Here, we need it since when need to initialize the DB before running the app.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //This opens the database.
+  final AppDatabase database =
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  //This creates a new DatabaseRepository from the AppDatabase instance just initialized
+  final databaseRepository = DatabaseRepository(database: database);
+
+  //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository. 
+  //That instance will be then shared through the platform and will be unique.
+  runApp(ChangeNotifierProvider<DatabaseRepository>(
+    create: (context) => databaseRepository,
+    child: MyApp(),
+  ));
 }
 
 class AppThemes {
@@ -133,6 +153,15 @@ class InfoPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Inserire i Credits qui'),
+            ElevatedButton(
+              onPressed: () async{
+                DateTime temp = DateTime.now();
+                String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
+                carboEntity? check = await Provider.of<DatabaseRepository>(context,listen: false).check_carboEntity(dataString);
+                print(check);
+              }, 
+              child: Text('prova funzionamento database')
+              ),
           ],
         ),
       ),

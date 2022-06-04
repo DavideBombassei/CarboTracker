@@ -174,7 +174,7 @@ class _EvolvingImageState extends State<EvolvingImage> {
                   content: Text('!!', textAlign: TextAlign.center)));
         } else {}
       } else {
-        _pezzo = _pezzo + 4;
+        _pezzo = _pezzo + 1;
         savepezzo();
       }
       _controllDate = _controllDate.add(const Duration(days: 1));
@@ -233,7 +233,7 @@ Future savepezzo() async {
 
 Future<int> getpuzzle() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final numpuzzle = prefs.getInt('numpuzzle') ?? 1;
+  final numpuzzle = prefs.getInt('numpuzzle') ?? 0;
   return numpuzzle;
 }
 
