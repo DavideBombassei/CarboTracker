@@ -233,7 +233,7 @@ Future savepezzo() async {
 
 Future<int> getpuzzle() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final numpuzzle = prefs.getInt('numpuzzle') ?? 0;
+  final numpuzzle = prefs.getInt('numpuzzle') ?? 1;
   return numpuzzle;
 }
 
