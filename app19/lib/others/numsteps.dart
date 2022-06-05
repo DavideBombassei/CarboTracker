@@ -29,4 +29,9 @@ class numsteps extends ChangeNotifier {
       }
     }
   }
+
+  Future stepsRefresh() async {
+    steps_update = steps_update;
+    notifyListeners();
+  }
 }

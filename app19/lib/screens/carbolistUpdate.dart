@@ -1,3 +1,4 @@
+import 'package:app19/repository/databaseRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:app19/others/carbohydrates.dart';
 import 'package:provider/provider.dart';
@@ -186,13 +187,18 @@ class _CarboListUpdateState extends State<CarboListUpdate> {
               width: 50,
               child: FloatingActionButton(
                 heroTag: "btn$i",
-                onPressed: () {
+                onPressed: () async {
+                  DateTime temp = DateTime.now();
+                  String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
+                  int? ID = await Provider.of<DatabaseRepository>(context, listen: false).get_id(dataString) ?? 0;
                   setState(() {
                     Provider.of<carbohydrates>(context, listen: false)
                         .addcarbo(carb, lim, carbperc);
                     carb = 0;
                     print(carbgrams);
                   });
+                  print(carbgrams);
+                  await Provider.of<DatabaseRepository>(context, listen: false).update_value(carbgrams, ID);
                 },
                 child: Icon(Icons.add),
                 elevation: 0,

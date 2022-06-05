@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:app19/repository/databaseRepository.dart';
+import 'package:app19/others/carbohydrates.dart';
 
 double adjuster_x = 15;
 
@@ -18,6 +19,26 @@ class CarboCounter extends StatefulWidget {
 }
 
 class _CarboCounterState extends State<CarboCounter> {
+
+  void populatefields_carbo() async {
+    DateTime temp = DateTime.now();
+    String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
+    int? ID = await Provider.of<DatabaseRepository>(context, listen: false).get_id(dataString) ?? 0;
+    carbgrams = await Provider.of<DatabaseRepository>(context, listen: false).get_value(ID) ?? 0;
+    print(carbgrams);
+    await Provider.of<carbohydrates>(context, listen: false).CarboRefresh();
+    steps_update = await Provider.of<DatabaseRepository>(context, listen: false).get_fitbitSteps(dataString) ?? 0.0;
+    cal_update = await Provider.of<DatabaseRepository>(context, listen: false).get_fitbitCals(dataString) ?? 0.0;
+    await Provider.of<numsteps>(context, listen: false).stepsRefresh();
+    await Provider.of<numcal>(context, listen: false).calsRefresh();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    populatefields_carbo();
+  }
+
   List<String> phrases = [
     //'Solo chi rischia di andare troppo lontano avrà la possibilità di scoprire quanto lontano si può andare',
     'Se non credi in te stesso, nessuno lo farà per te',

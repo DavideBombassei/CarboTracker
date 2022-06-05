@@ -1,4 +1,3 @@
-import 'package:app19/others/numcal.dart';
 import 'package:flutter/material.dart';
 
 double carbgrams = 0;
@@ -14,3 +13,4 @@ class carbohydrates extends ChangeNotifier {
     notifyListeners();
   }
 }
+

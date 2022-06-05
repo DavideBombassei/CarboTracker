@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:app19/repository/databaseRepository.dart';
 import 'package:fitbitter/fitbitter.dart';
 
+bool oneTimeOnly = true;
+
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
@@ -33,23 +35,30 @@ class _HomePageState extends State<HomePage> {
                     clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
                   );
                 }*/
+                DateTime temp = DateTime.now();
+                String dataString = temp.year.toString() +
+                    temp.month.toString() +
+                    temp.day.toString();
                 await Provider.of<numsteps>(context, listen: false)
                     .stepsUpdate();
                 print(steps_update);
+                double toaddCarbo = await Provider.of<DatabaseRepository>(context, listen: false).get_carbBurned(dataString) ?? 0;
+                if (oneTimeOnly) {
+                  carbgrams = carbgrams + toaddCarbo;
+                  oneTimeOnly = false;
+                }
                 await Provider.of<numcal>(context, listen: false).CalUpdate();
                 print(cal_update);
                 await Provider.of<carbohydrates>(context, listen: false)
                     .CarboRefresh();
                 print(cal_update);
-
-                DateTime temp = DateTime.now();
-                String dataString = temp.year.toString() +
-                    temp.month.toString() +
-                    temp.day.toString();
                 await Provider.of<DatabaseRepository>(context, listen: false)
                     .update_fitbitSteps(steps_update ?? 0, dataString);
                 await Provider.of<DatabaseRepository>(context, listen: false)
                     .update_fitbitCals(cal_update ?? 0, dataString);
+                int? ID = await Provider.of<DatabaseRepository>(context, listen: false).get_id(dataString) ?? 0;
+                await Provider.of<DatabaseRepository>(context, listen: false).update_value(carbgrams, ID);
+                await Provider.of<DatabaseRepository>(context, listen: false).update_carbBurned(cal_carbocounter_static ?? 0, dataString);
 
                 setState(() {});
               },

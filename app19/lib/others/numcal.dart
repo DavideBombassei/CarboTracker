@@ -17,12 +17,7 @@ class numcal extends ChangeNotifier {
     cal_carbocounter_static = cal_carbocounter_static! + cal_carbocounter!;
     print('Calstatic $cal_carbocounter_static');
 
-// Da controllare questi if (ragionamento)
-    if (carbgrams > 0) {
-      carbgrams = carbgrams - cal_carbocounter!;
-    } else if (carbgrams < cal_carbocounter!) {
-      carbgrams = 0;
-    }
+    carbgrams = carbgrams - cal_carbocounter!;
 
     print('Carb bruciati $cal_carbocounter');
     notifyListeners();
@@ -45,5 +40,10 @@ class numcal extends ChangeNotifier {
         }
       }
     }
+  }
+
+  Future calsRefresh() async {
+    cal_update = cal_update;
+    notifyListeners();
   }
 }

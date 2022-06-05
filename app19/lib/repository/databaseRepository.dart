@@ -16,14 +16,29 @@ class DatabaseRepository extends ChangeNotifier{
     return results;
   }
 
-  Future<int?> get_todayId(String dataString) async{
-    final results = await database.carbodao.get_todayId(dataString);
-    return results;
+  Future<int?> get_id(String dataString) async{
+    final results = await database.carbodao.check_carboEntity(dataString);
+    return results?.id;
   }
 
   Future<double?> get_value(int id) async{
-    final results = await database.carbodao.get_value(id);
-    return results;
+    final results = await database.carbodao.check_carboEntity_id(id);
+    return results?.value;
+  }
+
+  Future<double?> get_fitbitSteps(String dataString) async{
+    final results = await database.carbodao.check_carboEntity(dataString);
+    return results?.fitbitSteps;
+  }
+
+  Future<double?> get_fitbitCals(String dataString) async{
+    final results = await database.carbodao.check_carboEntity(dataString);
+    return results?.fitbitCals;
+  }
+
+  Future<double?> get_carbBurned(String dataString) async{
+    final results = await database.carbodao.check_carboEntity(dataString);
+    return results?.carbBurned;
   }
 
   Future<void> update_fitbitSteps(double fitbitSteps, String dataString) async {
@@ -38,6 +53,16 @@ class DatabaseRepository extends ChangeNotifier{
 
   Future<void> update_value(double value, int id) async {
     await database.carbodao.update_value(value, id);
+    notifyListeners();
+  }
+
+  Future<void> update_carbBurned(double carbBurned, String dataString) async {
+    await database.carbodao.update_carbBurned(carbBurned, dataString);
+    notifyListeners();
+  }
+
+  Future<void> delete_all() async {
+    await database.carbodao.delete_all();
     notifyListeners();
   }
 
