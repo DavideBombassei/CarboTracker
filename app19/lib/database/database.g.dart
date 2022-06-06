@@ -63,6 +63,8 @@ class _$AppDatabase extends AppDatabase {
 
   carboDao? _carbodaoInstance;
 
+  puzzleDao? _puzzledaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -83,6 +85,8 @@ class _$AppDatabase extends AppDatabase {
       onCreate: (database, version) async {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `carboEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `dataString` TEXT NOT NULL, `fitbitSteps` REAL, `fitbitCals` REAL, `value` REAL, `carbBurned` REAL)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `puzzleEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `dataString` TEXT NOT NULL, `numPuzzle` INTEGER, `numPezzo` INTEGER, `alreadyClicked` INTEGER, FOREIGN KEY (`id`) REFERENCES `carboEntity` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -93,6 +97,11 @@ class _$AppDatabase extends AppDatabase {
   @override
   carboDao get carbodao {
     return _carbodaoInstance ??= _$carboDao(database, changeListener);
+  }
+
+  @override
+  puzzleDao get puzzledao {
+    return _puzzledaoInstance ??= _$puzzleDao(database, changeListener);
   }
 }
 
@@ -183,5 +192,92 @@ class _$carboDao extends carboDao {
   Future<void> insert_carboEntity(carboEntity carboentity) async {
     await _carboEntityInsertionAdapter.insert(
         carboentity, OnConflictStrategy.abort);
+  }
+}
+
+class _$puzzleDao extends puzzleDao {
+  _$puzzleDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _puzzleEntityInsertionAdapter = InsertionAdapter(
+            database,
+            'puzzleEntity',
+            (puzzleEntity item) => <String, Object?>{
+                  'id': item.id,
+                  'dataString': item.dataString,
+                  'numPuzzle': item.numPuzzle,
+                  'numPezzo': item.numPezzo,
+                  'alreadyClicked': item.alreadyClicked == null
+                      ? null
+                      : (item.alreadyClicked! ? 1 : 0)
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<puzzleEntity> _puzzleEntityInsertionAdapter;
+
+  @override
+  Future<puzzleEntity?> check_puzzleEntity(String dataString) async {
+    return _queryAdapter.query(
+        'SELECT * FROM puzzleEntity WHERE dataString = ?1',
+        mapper: (Map<String, Object?> row) => puzzleEntity(
+            row['id'] as int?,
+            row['dataString'] as String,
+            row['numPuzzle'] as int?,
+            row['numPezzo'] as int?,
+            row['alreadyClicked'] == null
+                ? null
+                : (row['alreadyClicked'] as int) != 0),
+        arguments: [dataString]);
+  }
+
+  @override
+  Future<puzzleEntity?> check_puzzleEntity_id(int id) async {
+    return _queryAdapter.query('SELECT * FROM puzzleEntity WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => puzzleEntity(
+            row['id'] as int?,
+            row['dataString'] as String,
+            row['numPuzzle'] as int?,
+            row['numPezzo'] as int?,
+            row['alreadyClicked'] == null
+                ? null
+                : (row['alreadyClicked'] as int) != 0),
+        arguments: [id]);
+  }
+
+  @override
+  Future<void> update_numPuzzle(int numPuzzle, String dataString) async {
+    await _queryAdapter.queryNoReturn(
+        'UPDATE puzzleEntity SET numPuzzle = ?1 WHERE dataString = ?2',
+        arguments: [numPuzzle, dataString]);
+  }
+
+  @override
+  Future<void> update_numPezzo(int numPezzo, String dataString) async {
+    await _queryAdapter.queryNoReturn(
+        'UPDATE puzzleEntity SET numPezzo = ?1 WHERE dataString = ?2',
+        arguments: [numPezzo, dataString]);
+  }
+
+  @override
+  Future<void> update_alreadyClicked(
+      bool alreadyClicked, String dataString) async {
+    await _queryAdapter.queryNoReturn(
+        'UPDATE puzzleEntity SET alreadyClicked = ?1 WHERE dataString = ?2',
+        arguments: [alreadyClicked ? 1 : 0, dataString]);
+  }
+
+  @override
+  Future<void> delete_all_puzzle() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM puzzleEntity');
+  }
+
+  @override
+  Future<void> insert_puzzleEntity(puzzleEntity puzzleentity) async {
+    await _puzzleEntityInsertionAdapter.insert(
+        puzzleentity, OnConflictStrategy.abort);
   }
 }

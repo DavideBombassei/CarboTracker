@@ -1,4 +1,5 @@
 import 'package:app19/database/entities/carboEntity.dart';
+import 'package:app19/database/entities/puzzleEntity.dart';
 import 'package:app19/others/numcal.dart';
 import 'package:app19/others/numsteps.dart';
 import 'package:app19/others/profile.dart';
@@ -157,8 +158,10 @@ class InfoPage extends StatelessWidget {
               onPressed: () async{
                 DateTime temp = DateTime.now();
                 String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
-                carboEntity? check = await Provider.of<DatabaseRepository>(context,listen: false).check_carboEntity(dataString);
-                print(check);
+                carboEntity? check1 = await Provider.of<DatabaseRepository>(context,listen: false).check_carboEntity(dataString);
+                print(check1);
+                puzzleEntity? check2 = await Provider.of<DatabaseRepository>(context,listen: false).check_puzzleEntity(dataString);
+                print(check2);
               }, 
               child: Text('prova funzionamento database')
               ),

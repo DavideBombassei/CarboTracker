@@ -1,4 +1,5 @@
 import 'package:app19/database/entities/carboEntity.dart';
+import 'package:app19/database/entities/puzzleEntity.dart';
 import 'package:flutter/material.dart';
 import 'package:fitbitter/fitbitter.dart';
 import 'package:app19/repository/databaseRepository.dart';
@@ -65,6 +66,7 @@ class _LoginDemoState extends State<LoginDemo> {
                 carboEntity? check = await Provider.of<DatabaseRepository>(context,listen: false).check_carboEntity(dataString);
                 if (check == null){
                   await Provider.of<DatabaseRepository>(context,listen: false).insert_carboEntity(carboEntity(null, dataString, 0, 0, 0, 0));
+                  await Provider.of<DatabaseRepository>(context,listen: false).insert_puzzleEntity(puzzleEntity(null, dataString, 1, 1, false));
                   print('Memorizzando il giorno...');
                 }
                 else{

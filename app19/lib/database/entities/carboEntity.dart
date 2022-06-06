@@ -4,6 +4,7 @@ import 'package:floor/floor.dart';
 class carboEntity {
 
   @PrimaryKey(autoGenerate: true)
+  @ColumnInfo(name: 'id')
   final int? id;
   
   final String dataString;

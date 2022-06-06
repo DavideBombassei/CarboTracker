@@ -1,5 +1,6 @@
 import 'package:app19/database/database.dart';
 import 'package:app19/database/entities/carboEntity.dart';
+import 'package:app19/database/entities/puzzleEntity.dart';
 import 'package:flutter/material.dart';
 
 class DatabaseRepository extends ChangeNotifier{
@@ -72,5 +73,52 @@ class DatabaseRepository extends ChangeNotifier{
     await database.carbodao.insert_carboEntity(carboentity);
     notifyListeners();
   }
+
+
+
+  Future<puzzleEntity?> check_puzzleEntity(String dataString) async {
+    final results = await database.puzzledao.check_puzzleEntity(dataString);
+    return results;
+  }
+
+  Future<int?> get_id_puzzle(String dataString) async {
+    final results = await database.puzzledao.check_puzzleEntity(dataString);
+    return results?.id;
+  }
+
+  Future<int?> get_numPuzzle(int id) async {
+    final results = await database.puzzledao.check_puzzleEntity_id(id-1);
+    return results?.numPuzzle;
+  }
+
+  Future<int?> get_numPezzo(int id) async {
+    final results = await database.puzzledao.check_puzzleEntity_id(id-1);
+    return results?.numPezzo;
+  }
+
+  Future<bool?> get_alreadyClicked(String dataString) async {
+    final results = await database.puzzledao.check_puzzleEntity(dataString);
+    return results?.alreadyClicked;
+  }
+
+  Future<void> update_numPuzzle(int numPuzzle, String dataString) async {
+    await database.puzzledao.update_numPuzzle(numPuzzle, dataString);
+    notifyListeners();
+  }
   
+  Future<void> update_numPezzo(int numPezzo, String dataString) async {
+    await database.puzzledao.update_numPezzo(numPezzo, dataString);
+    notifyListeners();
+  }
+
+  Future<void> update_alreadyClicked(bool alreadyClicked, String dataString) async {
+    await database.puzzledao.update_alreadyClicked(alreadyClicked, dataString);
+    notifyListeners();
+  }
+
+  Future<void> insert_puzzleEntity(puzzleEntity puzzleentity) async {
+    await database.puzzledao.insert_puzzleEntity(puzzleentity);
+    notifyListeners();
+  }
+
 }//DatabaseRepository
