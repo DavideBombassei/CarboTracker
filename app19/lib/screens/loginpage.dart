@@ -65,11 +65,12 @@ class _LoginDemoState extends State<LoginDemo> {
                 String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
                 carboEntity? check = await Provider.of<DatabaseRepository>(context,listen: false).check_carboEntity(dataString);
                 if (check == null){
-                  await Provider.of<DatabaseRepository>(context,listen: false).insert_carboEntity(carboEntity(null, dataString, 0, 0, 0, 0));
+                  await Provider.of<DatabaseRepository>(context,listen: false).insert_carboEntity(carboEntity(null, dataString, 0, 0, 0, 0, DateTime.now().hour, DateTime.now().hour));
                   await Provider.of<DatabaseRepository>(context,listen: false).insert_puzzleEntity(puzzleEntity(null, dataString, 1, 1, false));
                   print('Memorizzando il giorno...');
                 }
                 else{
+                  await Provider.of<DatabaseRepository>(context,listen: false).update_lastTimeRefreshed(DateTime.now().hour, dataString);
                   print('Giorno già memorizzato');
                 }
               } 
@@ -78,12 +79,6 @@ class _LoginDemoState extends State<LoginDemo> {
                     .showSnackBar(SnackBar(content: Text('Wrong credentials')));
               }
             },
-          ),
-          ElevatedButton(
-            onPressed: () async{
-              await Provider.of<DatabaseRepository>(context,listen: false).delete_all();
-            },
-            child: Text('cancella database'),
           ),
         ],
       ),

@@ -12,11 +12,13 @@ class carboEntity {
   final double? fitbitCals;
   final double? value;
   final double? carbBurned;
+  final int? lastTimeRefreshed;
+  final int? lastLimitRefresher;
 
-  carboEntity(this.id, this.dataString, this.fitbitSteps, this.fitbitCals, this.value, this.carbBurned);
+  carboEntity(this.id, this.dataString, this.fitbitSteps, this.fitbitCals, this.value, this.carbBurned, this.lastTimeRefreshed, this.lastLimitRefresher);
 
   @override
   String toString() {
-    return '| ${this.id} | ${this.dataString} | ${this.fitbitSteps} | ${this.fitbitCals} | ${this.value} | ${this.carbBurned} |';
+    return '| ${this.id} | ${this.dataString} | ${this.fitbitSteps} | ${this.fitbitCals} | ${this.value} | ${this.carbBurned} | ${this.lastTimeRefreshed} | ${this.lastLimitRefresher} |';
   }
 }

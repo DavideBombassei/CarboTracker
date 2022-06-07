@@ -22,6 +22,12 @@ abstract class carboDao {
   @Query('UPDATE carboEntity SET carbBurned = :carbBurned WHERE dataString = :dataString')
   Future<void> update_carbBurned(double carbBurned, String dataString);
 
+  @Query('UPDATE carboEntity SET lastTimeRefreshed = :lastTimeRefreshed WHERE dataString = :dataString')
+  Future<void> update_lastTimeRefreshed(int lastTimeRefreshed, String dataString);
+
+  @Query('UPDATE carboEntity SET lastLimitRefresher = :lastLimitRefresher WHERE dataString = :dataString')
+  Future<void> update_lastLimitRefresher(int lastLimitRefresher, String dataString);
+
   @Query('DELETE FROM carboEntity')
   Future<void> delete_all();
 

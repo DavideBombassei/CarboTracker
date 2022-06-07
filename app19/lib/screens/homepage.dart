@@ -39,26 +39,44 @@ class _HomePageState extends State<HomePage> {
                 String dataString = temp.year.toString() +
                     temp.month.toString() +
                     temp.day.toString();
-                await Provider.of<numsteps>(context, listen: false)
+                int okRefreshed = await Provider.of<DatabaseRepository>(context,listen: false).get_lastTimeRefreshed(dataString) ?? 0;
+                int limitRefresher = await Provider.of<DatabaseRepository>(context,listen: false).get_lastLimitRefresher(dataString) ?? 0;
+
+                if (okRefreshed >= limitRefresher) {
+
+                  await Provider.of<numsteps>(context, listen: false)
                     .stepsUpdate();
-                print(steps_update);
-                double toaddCarbo = await Provider.of<DatabaseRepository>(context, listen: false).get_carbBurned(dataString) ?? 0;
-                if (oneTimeOnly) {
-                  carbgrams = carbgrams + toaddCarbo;
-                  oneTimeOnly = false;
+                  print(steps_update);
+                  double toaddCarbo = await Provider.of<DatabaseRepository>(context, listen: false).get_carbBurned(dataString) ?? 0;
+                  if (oneTimeOnly) {
+                    carbgrams = carbgrams + toaddCarbo;
+                    oneTimeOnly = false;
+                  }
+                  await Provider.of<numcal>(context, listen: false).CalUpdate();
+                  print(cal_update);
+                  await Provider.of<carbohydrates>(context, listen: false)
+                      .CarboRefresh();
+                  print(cal_update);
+                  await Provider.of<DatabaseRepository>(context, listen: false)
+                      .update_fitbitSteps(steps_update ?? 0, dataString);
+                  await Provider.of<DatabaseRepository>(context, listen: false)
+                      .update_fitbitCals(cal_update ?? 0, dataString);
+                  int? ID = await Provider.of<DatabaseRepository>(context, listen: false).get_id(dataString) ?? 0;
+                  await Provider.of<DatabaseRepository>(context, listen: false).update_value(carbgrams, ID);
+                  await Provider.of<DatabaseRepository>(context, listen: false).update_carbBurned(cal_carbocounter_static ?? 0, dataString);
+
+                  limitRefresher = okRefreshed + 1;
+                  if (limitRefresher >= 24) {
+                    limitRefresher = 0;
+                  }
+
+                  await Provider.of<DatabaseRepository>(context, listen: false).update_lastLimitRefresher(limitRefresher, dataString);
+
                 }
-                await Provider.of<numcal>(context, listen: false).CalUpdate();
-                print(cal_update);
-                await Provider.of<carbohydrates>(context, listen: false)
-                    .CarboRefresh();
-                print(cal_update);
-                await Provider.of<DatabaseRepository>(context, listen: false)
-                    .update_fitbitSteps(steps_update ?? 0, dataString);
-                await Provider.of<DatabaseRepository>(context, listen: false)
-                    .update_fitbitCals(cal_update ?? 0, dataString);
-                int? ID = await Provider.of<DatabaseRepository>(context, listen: false).get_id(dataString) ?? 0;
-                await Provider.of<DatabaseRepository>(context, listen: false).update_value(carbgrams, ID);
-                await Provider.of<DatabaseRepository>(context, listen: false).update_carbBurned(cal_carbocounter_static ?? 0, dataString);
+
+                else {
+                  print('can not update, must wait till $limitRefresher');
+                }
 
                 setState(() {});
               },

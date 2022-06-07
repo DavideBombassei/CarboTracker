@@ -84,7 +84,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `carboEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `dataString` TEXT NOT NULL, `fitbitSteps` REAL, `fitbitCals` REAL, `value` REAL, `carbBurned` REAL)');
+            'CREATE TABLE IF NOT EXISTS `carboEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `dataString` TEXT NOT NULL, `fitbitSteps` REAL, `fitbitCals` REAL, `value` REAL, `carbBurned` REAL, `lastTimeRefreshed` INTEGER, `lastLimitRefresher` INTEGER)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `puzzleEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `dataString` TEXT NOT NULL, `numPuzzle` INTEGER, `numPezzo` INTEGER, `alreadyClicked` INTEGER, FOREIGN KEY (`id`) REFERENCES `carboEntity` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
 
@@ -117,7 +117,9 @@ class _$carboDao extends carboDao {
                   'fitbitSteps': item.fitbitSteps,
                   'fitbitCals': item.fitbitCals,
                   'value': item.value,
-                  'carbBurned': item.carbBurned
+                  'carbBurned': item.carbBurned,
+                  'lastTimeRefreshed': item.lastTimeRefreshed,
+                  'lastLimitRefresher': item.lastLimitRefresher
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -138,7 +140,9 @@ class _$carboDao extends carboDao {
             row['fitbitSteps'] as double?,
             row['fitbitCals'] as double?,
             row['value'] as double?,
-            row['carbBurned'] as double?),
+            row['carbBurned'] as double?,
+            row['lastTimeRefreshed'] as int?,
+            row['lastLimitRefresher'] as int?),
         arguments: [dataString]);
   }
 
@@ -151,7 +155,9 @@ class _$carboDao extends carboDao {
             row['fitbitSteps'] as double?,
             row['fitbitCals'] as double?,
             row['value'] as double?,
-            row['carbBurned'] as double?),
+            row['carbBurned'] as double?,
+            row['lastTimeRefreshed'] as int?,
+            row['lastLimitRefresher'] as int?),
         arguments: [id]);
   }
 
@@ -181,6 +187,22 @@ class _$carboDao extends carboDao {
     await _queryAdapter.queryNoReturn(
         'UPDATE carboEntity SET carbBurned = ?1 WHERE dataString = ?2',
         arguments: [carbBurned, dataString]);
+  }
+
+  @override
+  Future<void> update_lastTimeRefreshed(
+      int lastTimeRefreshed, String dataString) async {
+    await _queryAdapter.queryNoReturn(
+        'UPDATE carboEntity SET lastTimeRefreshed = ?1 WHERE dataString = ?2',
+        arguments: [lastTimeRefreshed, dataString]);
+  }
+
+  @override
+  Future<void> update_lastLimitRefresher(
+      int lastLimitRefresher, String dataString) async {
+    await _queryAdapter.queryNoReturn(
+        'UPDATE carboEntity SET lastLimitRefresher = ?1 WHERE dataString = ?2',
+        arguments: [lastLimitRefresher, dataString]);
   }
 
   @override

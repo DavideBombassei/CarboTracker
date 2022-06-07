@@ -42,6 +42,16 @@ class DatabaseRepository extends ChangeNotifier{
     return results?.carbBurned;
   }
 
+  Future<int?> get_lastTimeRefreshed(String dataString) async{
+    final results = await database.carbodao.check_carboEntity(dataString);
+    return results?.lastTimeRefreshed;
+  }
+
+  Future<int?> get_lastLimitRefresher(String dataString) async{
+    final results = await database.carbodao.check_carboEntity(dataString);
+    return results?.lastLimitRefresher;
+  }
+
   Future<void> update_fitbitSteps(double fitbitSteps, String dataString) async {
     await database.carbodao.update_fitbitSteps(fitbitSteps, dataString);
     notifyListeners();
@@ -59,6 +69,16 @@ class DatabaseRepository extends ChangeNotifier{
 
   Future<void> update_carbBurned(double carbBurned, String dataString) async {
     await database.carbodao.update_carbBurned(carbBurned, dataString);
+    notifyListeners();
+  }
+
+  Future<void> update_lastTimeRefreshed(int lastTimeRefreshed, String dataString) async {
+    await database.carbodao.update_lastTimeRefreshed(lastTimeRefreshed, dataString);
+    notifyListeners();
+  }
+
+  Future<void> update_lastLimitRefresher(int lastLimitRefresher, String dataString) async {
+    await database.carbodao.update_lastLimitRefresher(lastLimitRefresher, dataString);
     notifyListeners();
   }
 
