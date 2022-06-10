@@ -19,16 +19,24 @@ class CarboCounter extends StatefulWidget {
 }
 
 class _CarboCounterState extends State<CarboCounter> {
-
   void populatefields_carbo() async {
     DateTime temp = DateTime.now();
-    String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
-    int? ID = await Provider.of<DatabaseRepository>(context, listen: false).get_id(dataString) ?? 0;
-    carbgrams = await Provider.of<DatabaseRepository>(context, listen: false).get_value(ID) ?? 0;
+    String dataString =
+        temp.year.toString() + temp.month.toString() + temp.day.toString();
+    int? ID = await Provider.of<DatabaseRepository>(context, listen: false)
+            .get_id(dataString) ??
+        0;
+    carbgrams = await Provider.of<DatabaseRepository>(context, listen: false)
+            .get_value(ID) ??
+        0;
     print(carbgrams);
     await Provider.of<carbohydrates>(context, listen: false).CarboRefresh();
-    steps_update = await Provider.of<DatabaseRepository>(context, listen: false).get_fitbitSteps(dataString) ?? 0.0;
-    cal_update = await Provider.of<DatabaseRepository>(context, listen: false).get_fitbitCals(dataString) ?? 0.0;
+    steps_update = await Provider.of<DatabaseRepository>(context, listen: false)
+            .get_fitbitSteps(dataString) ??
+        0.0;
+    cal_update = await Provider.of<DatabaseRepository>(context, listen: false)
+            .get_fitbitCals(dataString) ??
+        0.0;
     await Provider.of<numsteps>(context, listen: false).stepsRefresh();
     await Provider.of<numcal>(context, listen: false).calsRefresh();
   }
@@ -178,7 +186,7 @@ Future<double?> getCal() async {
       FitbitActivityTimeseriesDataManager(
     clientID: '238CL6',
     clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
-    type: 'calories',
+    type: 'activityCalories',
   );
   final calData = await fitbitActivityTimeseriesDataManager
       .fetch(FitbitActivityTimeseriesAPIURL.dayWithResource(

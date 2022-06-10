@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 int carb = 0;
 double buttondim = 60; //dimensione bottoni +-10 +-1
 int lim =
-    500; //limite giornaliero carboidrati per normalizzare entro [0,1] perchè richiesto dall'indicatore
+    250; //limite giornaliero carboidrati per normalizzare entro [0,1] perchè richiesto dall'indicatore
 
 class CarboListUpdate extends StatefulWidget {
   @override
@@ -189,8 +189,13 @@ class _CarboListUpdateState extends State<CarboListUpdate> {
                 heroTag: "btn$i",
                 onPressed: () async {
                   DateTime temp = DateTime.now();
-                  String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
-                  int? ID = await Provider.of<DatabaseRepository>(context, listen: false).get_id(dataString) ?? 0;
+                  String dataString = temp.year.toString() +
+                      temp.month.toString() +
+                      temp.day.toString();
+                  int? ID = await Provider.of<DatabaseRepository>(context,
+                              listen: false)
+                          .get_id(dataString) ??
+                      0;
                   setState(() {
                     Provider.of<carbohydrates>(context, listen: false)
                         .addcarbo(carb, lim, carbperc);
@@ -198,7 +203,8 @@ class _CarboListUpdateState extends State<CarboListUpdate> {
                     print(carbgrams);
                   });
                   print(carbgrams);
-                  await Provider.of<DatabaseRepository>(context, listen: false).update_value(carbgrams, ID);
+                  await Provider.of<DatabaseRepository>(context, listen: false)
+                      .update_value(carbgrams, ID);
                 },
                 child: Icon(Icons.add),
                 elevation: 0,

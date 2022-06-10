@@ -131,6 +131,20 @@ class _$carboDao extends carboDao {
   final InsertionAdapter<carboEntity> _carboEntityInsertionAdapter;
 
   @override
+  Future<List<carboEntity?>> show_data() async {
+    return _queryAdapter.queryList('SELECT * FROM carboEntity',
+        mapper: (Map<String, Object?> row) => carboEntity(
+            row['id'] as int?,
+            row['dataString'] as String,
+            row['fitbitSteps'] as double?,
+            row['fitbitCals'] as double?,
+            row['value'] as double?,
+            row['carbBurned'] as double?,
+            row['lastTimeRefreshed'] as int?,
+            row['lastLimitRefresher'] as int?));
+  }
+
+  @override
   Future<carboEntity?> check_carboEntity(String dataString) async {
     return _queryAdapter.query(
         'SELECT * FROM carboEntity WHERE dataString = ?1',

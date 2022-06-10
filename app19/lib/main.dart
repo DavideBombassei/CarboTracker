@@ -16,9 +16,8 @@ import 'package:provider/provider.dart';
 import 'package:app19/repository/databaseRepository.dart';
 import 'package:app19/database/database.dart';
 
-Future<void> main() async{
-
-  //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine. 
+Future<void> main() async {
+  //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine.
   //This is needed when you need to interact with the native core of the app.
   //Here, we need it since when need to initialize the DB before running the app.
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +28,7 @@ Future<void> main() async{
   //This creates a new DatabaseRepository from the AppDatabase instance just initialized
   final databaseRepository = DatabaseRepository(database: database);
 
-  //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository. 
+  //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository.
   //That instance will be then shared through the platform and will be unique.
   runApp(ChangeNotifierProvider<DatabaseRepository>(
     create: (context) => databaseRepository,
@@ -139,8 +138,26 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class InfoPage extends StatelessWidget {
+class InfoPage extends StatefulWidget {
   const InfoPage({Key? key}) : super(key: key);
+
+  @override
+  State<InfoPage> createState() => _InfoPageState();
+}
+
+class _InfoPageState extends State<InfoPage> {
+  void populatefields_calandstep() async {
+    List<carboEntity?> check3 =
+        await Provider.of<DatabaseRepository>(context, listen: false)
+            .show_data();
+    print(check3);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    populatefields_calandstep();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,24 +166,50 @@ class InfoPage extends StatelessWidget {
         title: Text('InfoPage'),
         centerTitle: true,
       ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Inserire i Credits qui'),
-            ElevatedButton(
-              onPressed: () async{
-                DateTime temp = DateTime.now();
-                String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
-                carboEntity? check1 = await Provider.of<DatabaseRepository>(context,listen: false).check_carboEntity(dataString);
-                print(check1);
-                puzzleEntity? check2 = await Provider.of<DatabaseRepository>(context,listen: false).check_puzzleEntity(dataString);
-                print(check2);
-              }, 
-              child: Text('prova funzionamento database')
-              ),
-          ],
-        ),
+      body: Center(
+        child: Consumer<DatabaseRepository>(builder: (context, dbr, child) {
+          //The logic is to query the DB for the entire list of Meal using dbr.findAllMeals()
+          //and then populate the ListView accordingly.
+          //We need to use a FutureBuilder since the result of dbr.findAllMeals() is a Future.
+          return FutureBuilder(
+            initialData: null,
+            future: dbr.show_data(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final data = snapshot.data as List<carboEntity?>;
+                //If the Meal table is empty, show a simple Text, otherwise show the list of meals using a ListView.
+                return data.length == 0
+                    ? Text('No day register in database')
+                    : ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          //Here, we are using a Card to show a Meal
+                          return /*Card(
+                                elevation: 5,
+                                child:*/
+                              ListTile(
+                            leading: Text(' ${data[index]?.id}'),
+                            trailing: Text('${data[index]?.value}'),
+
+                            title: Text('Data: ${data[index]?.dataString}'),
+
+                            //Text('CHO : ${data[mealIndex].fitbitCals}'),
+                            subtitle: Text(
+                              'STEPS : ${data[index]?.fitbitSteps}   CAL : ${data[index]?.fitbitCals}',
+                            ),
+
+                            //When a ListTile is tapped, the user is redirected to the MealPage, where it will be able to edit it.
+                            //onTap: () => _toMealPage(context, data[mealIndex]),
+                          );
+                        });
+              } //if
+              else {
+                return CircularProgressIndicator();
+              } //else
+            }, //FutureBuilder builder
+          );
+        } //Consumer-builder
+            ),
       ),
     );
   }

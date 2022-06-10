@@ -3,51 +3,55 @@ import 'package:app19/database/entities/carboEntity.dart';
 import 'package:app19/database/entities/puzzleEntity.dart';
 import 'package:flutter/material.dart';
 
-class DatabaseRepository extends ChangeNotifier{
-
+class DatabaseRepository extends ChangeNotifier {
   //The state of the database is just the AppDatabase
   final AppDatabase database;
 
   //Default constructor
   DatabaseRepository({required this.database});
 
+  Future<List<carboEntity?>> show_data() async {
+    final results = await database.carbodao.show_data();
+    return results;
+  }
+
   //This method wraps the method of the DAO
-  Future<carboEntity?> check_carboEntity(String dataString) async{
+  Future<carboEntity?> check_carboEntity(String dataString) async {
     final results = await database.carbodao.check_carboEntity(dataString);
     return results;
   }
 
-  Future<int?> get_id(String dataString) async{
+  Future<int?> get_id(String dataString) async {
     final results = await database.carbodao.check_carboEntity(dataString);
     return results?.id;
   }
 
-  Future<double?> get_value(int id) async{
+  Future<double?> get_value(int id) async {
     final results = await database.carbodao.check_carboEntity_id(id);
     return results?.value;
   }
 
-  Future<double?> get_fitbitSteps(String dataString) async{
+  Future<double?> get_fitbitSteps(String dataString) async {
     final results = await database.carbodao.check_carboEntity(dataString);
     return results?.fitbitSteps;
   }
 
-  Future<double?> get_fitbitCals(String dataString) async{
+  Future<double?> get_fitbitCals(String dataString) async {
     final results = await database.carbodao.check_carboEntity(dataString);
     return results?.fitbitCals;
   }
 
-  Future<double?> get_carbBurned(String dataString) async{
+  Future<double?> get_carbBurned(String dataString) async {
     final results = await database.carbodao.check_carboEntity(dataString);
     return results?.carbBurned;
   }
 
-  Future<int?> get_lastTimeRefreshed(String dataString) async{
+  Future<int?> get_lastTimeRefreshed(String dataString) async {
     final results = await database.carbodao.check_carboEntity(dataString);
     return results?.lastTimeRefreshed;
   }
 
-  Future<int?> get_lastLimitRefresher(String dataString) async{
+  Future<int?> get_lastLimitRefresher(String dataString) async {
     final results = await database.carbodao.check_carboEntity(dataString);
     return results?.lastLimitRefresher;
   }
@@ -72,13 +76,17 @@ class DatabaseRepository extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> update_lastTimeRefreshed(int lastTimeRefreshed, String dataString) async {
-    await database.carbodao.update_lastTimeRefreshed(lastTimeRefreshed, dataString);
+  Future<void> update_lastTimeRefreshed(
+      int lastTimeRefreshed, String dataString) async {
+    await database.carbodao
+        .update_lastTimeRefreshed(lastTimeRefreshed, dataString);
     notifyListeners();
   }
 
-  Future<void> update_lastLimitRefresher(int lastLimitRefresher, String dataString) async {
-    await database.carbodao.update_lastLimitRefresher(lastLimitRefresher, dataString);
+  Future<void> update_lastLimitRefresher(
+      int lastLimitRefresher, String dataString) async {
+    await database.carbodao
+        .update_lastLimitRefresher(lastLimitRefresher, dataString);
     notifyListeners();
   }
 
@@ -87,14 +95,12 @@ class DatabaseRepository extends ChangeNotifier{
     notifyListeners();
   }
 
-  //This method wraps the insert() method of the DAO. 
+  //This method wraps the insert() method of the DAO.
   //Then, it notifies the listeners that something changed.
   Future<void> insert_carboEntity(carboEntity carboentity) async {
     await database.carbodao.insert_carboEntity(carboentity);
     notifyListeners();
   }
-
-
 
   Future<puzzleEntity?> check_puzzleEntity(String dataString) async {
     final results = await database.puzzledao.check_puzzleEntity(dataString);
@@ -107,12 +113,12 @@ class DatabaseRepository extends ChangeNotifier{
   }
 
   Future<int?> get_numPuzzle(int id) async {
-    final results = await database.puzzledao.check_puzzleEntity_id(id-1);
+    final results = await database.puzzledao.check_puzzleEntity_id(id - 1);
     return results?.numPuzzle;
   }
 
   Future<int?> get_numPezzo(int id) async {
-    final results = await database.puzzledao.check_puzzleEntity_id(id-1);
+    final results = await database.puzzledao.check_puzzleEntity_id(id - 1);
     return results?.numPezzo;
   }
 
@@ -125,13 +131,14 @@ class DatabaseRepository extends ChangeNotifier{
     await database.puzzledao.update_numPuzzle(numPuzzle, dataString);
     notifyListeners();
   }
-  
+
   Future<void> update_numPezzo(int numPezzo, String dataString) async {
     await database.puzzledao.update_numPezzo(numPezzo, dataString);
     notifyListeners();
   }
 
-  Future<void> update_alreadyClicked(bool alreadyClicked, String dataString) async {
+  Future<void> update_alreadyClicked(
+      bool alreadyClicked, String dataString) async {
     await database.puzzledao.update_alreadyClicked(alreadyClicked, dataString);
     notifyListeners();
   }
@@ -140,5 +147,4 @@ class DatabaseRepository extends ChangeNotifier{
     await database.puzzledao.insert_puzzleEntity(puzzleentity);
     notifyListeners();
   }
-
-}//DatabaseRepository
+} //DatabaseRepository

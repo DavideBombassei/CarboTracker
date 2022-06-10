@@ -44,6 +44,25 @@ class numcal extends ChangeNotifier {
 
   Future calsRefresh() async {
     cal_update = cal_update;
+    if (cal_update! < 10) {
+      adjuster_x = 15;
+    } else {
+      if (cal_update! < 100.0) {
+        adjuster_x = 8;
+      } else {
+        if (cal_update! < 1000.0) {
+          adjuster_x = 5;
+        } else {
+          if (cal_update! < 10000.0) {
+            adjuster_x = 1;
+          } else {
+            if (cal_update! < 100000.0) {
+              adjuster_x = -4;
+            }
+          }
+        }
+      }
+    }
     notifyListeners();
   }
 }
