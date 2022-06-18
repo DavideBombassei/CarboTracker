@@ -10,7 +10,10 @@ double? cal_carbocounter_static = 0.0;
 class numcal extends ChangeNotifier {
   Future CalUpdate() async {
     double? cal = await getCal();
-    cal_update = cal;
+    double? calBMR = await getCalBMR();
+    cal_update = (cal! - calBMR!);
+    print('TOTALCAL $cal');
+    print('BMR: $calBMR');
 
     cal_carbocounter =
         (((cal_update! * 0.33) / 4) / lim) - cal_carbocounter_static!;

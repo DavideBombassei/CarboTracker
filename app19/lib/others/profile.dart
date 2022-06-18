@@ -1,11 +1,13 @@
+import 'package:app19/screens/loginpage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Profile profile = Profile(
-    name: 'Anna Arnaudo',
-    email: 'anna.arnaudo@gmail.com',
-    dateTime: DateTime(2000, 1, 1),
-    weight: 62,
-    height: 1.62);
+    name: profileName,
+    email: profileEmail,
+    dateTime: profileBirthday,
+    weight: profileWeight,
+    height: profileHeight);
 
 class Profile extends ChangeNotifier {
   String? name;

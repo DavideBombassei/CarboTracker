@@ -197,3 +197,20 @@ Future<double?> getCal() async {
   print(calData);
   return calData[0].value;
 }
+
+Future<double?> getCalBMR() async {
+  FitbitActivityTimeseriesDataManager fitbitActivityTimeseriesDataManager =
+      FitbitActivityTimeseriesDataManager(
+    clientID: '238CL6',
+    clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
+    type: 'caloriesBMR',
+  );
+  final calDataBMR = await fitbitActivityTimeseriesDataManager
+      .fetch(FitbitActivityTimeseriesAPIURL.dayWithResource(
+    date: DateTime.now().subtract(Duration(days: 0)),
+    userID: '7ML2XV',
+    resource: fitbitActivityTimeseriesDataManager.type,
+  )) as List<FitbitActivityTimeseriesData>;
+  print(calDataBMR);
+  return calDataBMR[0].value;
+}

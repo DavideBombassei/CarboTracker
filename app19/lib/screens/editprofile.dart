@@ -6,6 +6,7 @@ import 'package:app19/others/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer' as developer;
+import 'package:shared_preferences/shared_preferences.dart';
 
 Profile _editProfile =
     Profile(name: '${profile.name}', email: '${profile.email}');
@@ -97,6 +98,7 @@ class _EditProfileState extends State<EditProfileState> {
                   },
                   onSaved: (value) {
                     _editProfile.name = _nameControll.text;
+                    saveProfileName(_editProfile.name);
                   }),
               TextFormField(
                   decoration: const InputDecoration(
@@ -116,6 +118,7 @@ class _EditProfileState extends State<EditProfileState> {
                   },
                   onSaved: (value) {
                     _editProfile.email = _emailControll.text;
+                    saveProfileEmail(_editProfile.email);
                   }),
               DateTimeField(
                   initialValue: profile.dateTime,
@@ -144,6 +147,7 @@ class _EditProfileState extends State<EditProfileState> {
                       _editProfile.dateTime = profile.dateTime;
                     } else {
                       _editProfile.dateTime = _date;
+                      saveProfileBirthday(_date!.day, _date!.month, _date!.year);
                     }
                   }),
               TextFormField(
@@ -165,6 +169,7 @@ class _EditProfileState extends State<EditProfileState> {
                       _editProfile.height = profile.height;
                     } else {
                       _editProfile.height = double.parse(_heightControll.text);
+                      saveProfileHeight(_editProfile.height);
                     }
                   }),
               TextFormField(
@@ -188,6 +193,7 @@ class _EditProfileState extends State<EditProfileState> {
                       _editProfile.weight = profile.weight;
                     } else {
                       _editProfile.weight = double.parse(_weightControll.text);
+                      saveProfileWeight(_editProfile.weight);
                     }
                   }),
               const SizedBox(height: 20),
@@ -232,4 +238,31 @@ class _EditProfileState extends State<EditProfileState> {
     final regExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     return regExp.hasMatch(val);
   }
+}
+
+Future saveProfileName(value) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('profileName', value);
+}
+
+Future saveProfileEmail(value) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('profileEmail', value);
+}
+
+Future saveProfileWeight(value) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setDouble('profileWeight', value);
+}
+
+Future saveProfileHeight(value) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setDouble('profileHeight', value);
+}
+
+Future saveProfileBirthday(day, month, year) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setInt('profileBirthdayd', day);
+  await prefs.setInt('profileBirthdaym', month);
+  await prefs.setInt('profileBirthdayy', year);
 }
