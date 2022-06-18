@@ -9,6 +9,8 @@ class PageViewDemo extends StatefulWidget {
 }
 
 class _PageViewDemoState extends State<PageViewDemo> {
+  //With this stateful widget we build the 2 pages showed in the Homepage of the app
+
   final _controller = new PageController();
 
   static const _kDuration = const Duration(milliseconds: 300);
@@ -17,11 +19,13 @@ class _PageViewDemoState extends State<PageViewDemo> {
 
   final _kArrowColor = Colors.black.withOpacity(0.8);
 
+  //List of widgets containing the pages
   final List<Widget> _pages = <Widget>[
     CarboCounter(),
     EvolvingImage(),
   ];
 
+  //Here we build the bottom bar with the two dots indicating the user position among the homepage pages
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

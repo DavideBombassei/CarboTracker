@@ -7,7 +7,6 @@ import 'package:app19/screens/pageviewdemo.dart';
 import 'package:app19/others/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:app19/repository/databaseRepository.dart';
-import 'package:fitbitter/fitbitter.dart';
 
 bool oneTimeOnly = true;
 

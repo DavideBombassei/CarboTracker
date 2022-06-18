@@ -186,7 +186,7 @@ Future<double?> getCal() async {
       FitbitActivityTimeseriesDataManager(
     clientID: '238CL6',
     clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
-    type: 'activityCalories',
+    type: 'calories',
   );
   final calData = await fitbitActivityTimeseriesDataManager
       .fetch(FitbitActivityTimeseriesAPIURL.dayWithResource(

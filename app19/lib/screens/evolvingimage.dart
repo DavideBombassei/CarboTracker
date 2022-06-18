@@ -26,26 +26,37 @@ class _EvolvingImageState extends State<EvolvingImage> {
 
   void populatefields() async {
     DateTime temp = DateTime.now();
-    String dataString = temp.year.toString() +
-        temp.month.toString() +
-        temp.day.toString();
-    int? ID = await Provider.of<DatabaseRepository>(context, listen: false).get_id(dataString) ?? 0;
-    bool? whichPiece = await Provider.of<DatabaseRepository>(context, listen: false).get_alreadyClicked(dataString);
-    bool? whichPuzzle = await Provider.of<DatabaseRepository>(context, listen: false).get_alreadyClicked(dataString);
+    String dataString =
+        temp.year.toString() + temp.month.toString() + temp.day.toString();
+    int? ID = await Provider.of<DatabaseRepository>(context, listen: false)
+            .get_id(dataString) ??
+        0;
+    bool? whichPiece =
+        await Provider.of<DatabaseRepository>(context, listen: false)
+            .get_alreadyClicked(dataString);
+    bool? whichPuzzle =
+        await Provider.of<DatabaseRepository>(context, listen: false)
+            .get_alreadyClicked(dataString);
     if (whichPiece == false) {
-      final valuepezzo = await Provider.of<DatabaseRepository>(context,listen: false).get_numPezzo(ID);
+      final valuepezzo =
+          await Provider.of<DatabaseRepository>(context, listen: false)
+              .get_numPezzo(ID);
       _pezzo = valuepezzo ?? 1;
-    }
-    else {
-      final valuepezzo = await Provider.of<DatabaseRepository>(context,listen: false).get_numPezzo(ID+1);
+    } else {
+      final valuepezzo =
+          await Provider.of<DatabaseRepository>(context, listen: false)
+              .get_numPezzo(ID + 1);
       _pezzo = valuepezzo ?? 1;
     }
     if (whichPuzzle == false) {
-      final valuepuzzle = await Provider.of<DatabaseRepository>(context,listen: false).get_numPuzzle(ID);
+      final valuepuzzle =
+          await Provider.of<DatabaseRepository>(context, listen: false)
+              .get_numPuzzle(ID);
       numpuzzle = valuepuzzle ?? 1;
-    }
-    else {
-      final valuepuzzle = await Provider.of<DatabaseRepository>(context,listen: false).get_numPuzzle(ID+1);
+    } else {
+      final valuepuzzle =
+          await Provider.of<DatabaseRepository>(context, listen: false)
+              .get_numPuzzle(ID + 1);
       numpuzzle = valuepuzzle ?? 1;
     }
     setState(() {
@@ -81,15 +92,23 @@ class _EvolvingImageState extends State<EvolvingImage> {
                 String dataString = temp.year.toString() +
                     temp.month.toString() +
                     temp.day.toString();
-                bool? alreadyClicked = await Provider.of<DatabaseRepository>(context, listen: false).get_alreadyClicked(dataString);
-                int? ID = await Provider.of<DatabaseRepository>(context, listen: false).get_id(dataString) ?? 0;
-                val = await Provider.of<DatabaseRepository>(context, listen: false).get_value(ID-1) ?? 0;
+                bool? alreadyClicked = await Provider.of<DatabaseRepository>(
+                        context,
+                        listen: false)
+                    .get_alreadyClicked(dataString);
+                int? ID = await Provider.of<DatabaseRepository>(context,
+                            listen: false)
+                        .get_id(dataString) ??
+                    0;
+                val = await Provider.of<DatabaseRepository>(context,
+                            listen: false)
+                        .get_value(ID - 1) ??
+                    0;
                 if (val < 1 && alreadyClicked == false) {
                   showDialog(
                       context: context,
                       builder: (_) => AlertDialog(
-                            insetPadding:
-                                EdgeInsets.symmetric(horizontal: 40),
+                            insetPadding: EdgeInsets.symmetric(horizontal: 40),
                             backgroundColor: Colors.transparent,
                             //insetPadding: EdgeInsets.all(30),
                             content: Stack(
@@ -100,10 +119,9 @@ class _EvolvingImageState extends State<EvolvingImage> {
                                     //width: double.infinity,
                                     height: 170,
                                     decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15),
-                                        color: Color.fromARGB(
-                                            255, 255, 255, 255)),
+                                        borderRadius: BorderRadius.circular(15),
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255)),
                                     padding:
                                         EdgeInsets.fromLTRB(20, 50, 20, 20),
                                     child: Column(
@@ -129,8 +147,7 @@ class _EvolvingImageState extends State<EvolvingImage> {
                             actions: <Widget>[
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.stretch,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   SizedBox(
                                     width: 100,
@@ -169,28 +186,32 @@ class _EvolvingImageState extends State<EvolvingImage> {
 
   void _changeImage() async {
     DateTime temp = DateTime.now();
-    String dataString = temp.year.toString() +
-        temp.month.toString() +
-        temp.day.toString();
+    String dataString =
+        temp.year.toString() + temp.month.toString() + temp.day.toString();
     if (_pezzo == 9) {
       if (numpuzzle == 4) {
         showDialog(
             context: context,
-            builder: (_) => AlertDialog(
-                content: Text('!!', textAlign: TextAlign.center)));
+            builder: (_) =>
+                AlertDialog(content: Text('!!', textAlign: TextAlign.center)));
       } else {}
     } else {
       _pezzo = _pezzo + 1;
-      await Provider.of<DatabaseRepository>(context, listen: false).update_numPezzo(_pezzo, dataString);
-      await Provider.of<DatabaseRepository>(context, listen: false).update_alreadyClicked(true, dataString);
+      await Provider.of<DatabaseRepository>(context, listen: false)
+          .update_numPezzo(_pezzo, dataString);
+      await Provider.of<DatabaseRepository>(context, listen: false)
+          .update_alreadyClicked(true, dataString);
     }
     Navigator.pop(context);
     if (_pezzo == 9) {
       numpuzzle = numpuzzle + 1;
       _pezzo = 1;
-      await Provider.of<DatabaseRepository>(context, listen: false).update_numPezzo(_pezzo, dataString);
-      await Provider.of<DatabaseRepository>(context, listen: false).update_numPuzzle(numpuzzle, dataString);
-      await Provider.of<DatabaseRepository>(context, listen: false).update_alreadyClicked(true, dataString);
+      await Provider.of<DatabaseRepository>(context, listen: false)
+          .update_numPezzo(_pezzo, dataString);
+      await Provider.of<DatabaseRepository>(context, listen: false)
+          .update_numPuzzle(numpuzzle, dataString);
+      await Provider.of<DatabaseRepository>(context, listen: false)
+          .update_alreadyClicked(true, dataString);
       /*showDialog(
           context: context,
           builder: (_) => AlertDialog(

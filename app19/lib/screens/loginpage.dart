@@ -6,7 +6,6 @@ import 'package:app19/repository/databaseRepository.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 String? profileName = 'Anna Arnaudo';
 String? profileEmail = 'anna.arnaudo@gmail.com';
 double? profileWeight = 62;
@@ -58,17 +57,17 @@ class _LoginDemoState extends State<LoginDemo> {
           ),
           ElevatedButton(
             child: Text('Submit'),
-            onPressed: () async{
+            onPressed: () async {
               //if (_usercontroller.value.text == 'anna_arnaudo' && _pswcontroller.value.text == 'Biowrbl19'){
               if (_usercontroller.value.text == '' &&
                   _pswcontroller.value.text == '') {
                 Navigator.pushNamed(context, 'home');
                 String? userId = await FitbitConnector.authorize(
-                  context: context,
-                  clientID: '238CL6',
-                  clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
-                  redirectUri: 'example://fitbit/auth',
-                  callbackUrlScheme: 'example');
+                    context: context,
+                    clientID: '238CL6',
+                    clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
+                    redirectUri: 'example://fitbit/auth',
+                    callbackUrlScheme: 'example');
 
                 profileName = await getProfileName();
                 profileEmail = await getProfileEmail();
@@ -77,22 +76,32 @@ class _LoginDemoState extends State<LoginDemo> {
                 int profileBirthdayd = await getProfileBirthdayd();
                 int profileBirthdaym = await getProfileBirthdaym();
                 int profileBirthdayy = await getProfileBirthdayy();
-                profileBirthday = DateTime(profileBirthdayy, profileBirthdaym, profileBirthdayd);
+                profileBirthday = DateTime(
+                    profileBirthdayy, profileBirthdaym, profileBirthdayd);
 
                 DateTime temp = DateTime.now();
-                String dataString = temp.year.toString() + temp.month.toString() + temp.day.toString();
-                carboEntity? check = await Provider.of<DatabaseRepository>(context,listen: false).check_carboEntity(dataString);
-                if (check == null){
-                  await Provider.of<DatabaseRepository>(context,listen: false).insert_carboEntity(carboEntity(null, dataString, 0, 0, 0, 0, DateTime.now().hour, DateTime.now().hour));
-                  await Provider.of<DatabaseRepository>(context,listen: false).insert_puzzleEntity(puzzleEntity(null, dataString, 1, 1, false));
+                String dataString = temp.year.toString() +
+                    temp.month.toString() +
+                    temp.day.toString();
+                carboEntity? check = await Provider.of<DatabaseRepository>(
+                        context,
+                        listen: false)
+                    .check_carboEntity(dataString);
+                if (check == null) {
+                  await Provider.of<DatabaseRepository>(context, listen: false)
+                      .insert_carboEntity(carboEntity(null, dataString, 0, 0, 0,
+                          0, DateTime.now().hour, DateTime.now().hour));
+                  await Provider.of<DatabaseRepository>(context, listen: false)
+                      .insert_puzzleEntity(
+                          puzzleEntity(null, dataString, 1, 1, false));
                   print('Memorizzando il giorno...');
-                }
-                else{
-                  await Provider.of<DatabaseRepository>(context,listen: false).update_lastTimeRefreshed(DateTime.now().hour, dataString);
+                } else {
+                  await Provider.of<DatabaseRepository>(context, listen: false)
+                      .update_lastTimeRefreshed(
+                          DateTime.now().hour, dataString);
                   print('Giorno già memorizzato');
                 }
-              } 
-              else {
+              } else {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text('Wrong credentials')));
               }
@@ -112,7 +121,8 @@ Future<String> getProfileName() async {
 
 Future<String> getProfileEmail() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final profileEmail = prefs.getString('profileEmail') ?? 'anna.arnaudo@gmail.com';
+  final profileEmail =
+      prefs.getString('profileEmail') ?? 'anna.arnaudo@gmail.com';
   return profileEmail;
 }
 
