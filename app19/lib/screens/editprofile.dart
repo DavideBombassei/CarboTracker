@@ -62,8 +62,8 @@ class _EditProfileState extends State<EditProfileState> {
 
   TextEditingController _nameControll =
       TextEditingController(text: profile.name);
-  TextEditingController _emailControll =
-      TextEditingController(text: profile.email);
+  //TextEditingController _emailControll =
+  //  TextEditingController(text: profile.email);
 
   DateTime? _date = DateTime(2000, 1, 1);
   TextEditingController _weightControll =
@@ -100,7 +100,7 @@ class _EditProfileState extends State<EditProfileState> {
                     _editProfile.name = _nameControll.text;
                     saveProfileName(_editProfile.name);
                   }),
-              TextFormField(
+              /*TextFormField(
                   decoration: const InputDecoration(
                     icon: Icon(
                       Icons.email,
@@ -119,7 +119,7 @@ class _EditProfileState extends State<EditProfileState> {
                   onSaved: (value) {
                     _editProfile.email = _emailControll.text;
                     saveProfileEmail(_editProfile.email);
-                  }),
+                  }),*/
               DateTimeField(
                   initialValue: profile.dateTime,
                   decoration: const InputDecoration(
@@ -147,7 +147,8 @@ class _EditProfileState extends State<EditProfileState> {
                       _editProfile.dateTime = profile.dateTime;
                     } else {
                       _editProfile.dateTime = _date;
-                      saveProfileBirthday(_date!.day, _date!.month, _date!.year);
+                      saveProfileBirthday(
+                          _date!.day, _date!.month, _date!.year);
                     }
                   }),
               TextFormField(

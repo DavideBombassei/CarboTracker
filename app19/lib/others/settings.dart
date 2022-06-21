@@ -155,13 +155,13 @@ Widget _visualProfile(BuildContext context) {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24));
           }),
           const SizedBox(height: 10),
-          Consumer<Profile>(builder: (context, Profile, child) {
+          /*Consumer<Profile>(builder: (context, Profile, child) {
             return Text('${profile.email}',
                 style: TextStyle(
                     color: Color.fromARGB(255, 121, 120, 120),
                     fontWeight: FontWeight.bold,
                     fontSize: 16));
-          }),
+          }),*/
           const SizedBox(height: 30),
           Consumer<Profile>(builder: (context, Profile, child) {
             return (profile.height == null || profile.weight == null)
@@ -231,8 +231,6 @@ Widget _visualProfile(BuildContext context) {
         ]),
       ]);
 }
-//PER PRENDERE SPUNTO E FARLO PIU CARINO
-//https://github.com/JohannesMilke/user_profile_ii_example/blob/master/lib/widget/numbers_widget.dart
 
 Widget buildDivider(BuildContext context) => Container(
       height: 24,

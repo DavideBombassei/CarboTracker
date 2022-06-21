@@ -45,22 +45,23 @@ class _LoginDemoState extends State<LoginDemo> {
           TextField(
             controller: _usercontroller,
             decoration: InputDecoration(
-              labelText: 'Enter username',
-              hintText: 'username',
+              labelText: 'Enter Username',
+              hintText: 'Username',
             ),
           ),
           TextField(
             controller: _pswcontroller,
             obscureText: true,
             decoration: InputDecoration(
-                labelText: 'Enter password', hintText: 'password'),
+                labelText: 'Enter Password', hintText: 'Password'),
           ),
           ElevatedButton(
             child: Text('Submit'),
             onPressed: () async {
-              //if (_usercontroller.value.text == 'anna_arnaudo' && _pswcontroller.value.text == 'Biowrbl19'){
-              if (_usercontroller.value.text == '' &&
-                  _pswcontroller.value.text == '') {
+              if (_usercontroller.value.text == 'user19' &&
+                  _pswcontroller.value.text == 'demo19') {
+                //if (_usercontroller.value.text == '' &&
+                //_pswcontroller.value.text == '') {
                 Navigator.pushNamed(context, 'home');
                 String? userId = await FitbitConnector.authorize(
                     context: context,

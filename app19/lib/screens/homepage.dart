@@ -2,6 +2,7 @@ import 'package:app19/others/carbohydrates.dart';
 import 'package:app19/others/drawerlist.dart';
 import 'package:app19/others/numcal.dart';
 import 'package:app19/others/numsteps.dart';
+import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/material.dart';
 import 'package:app19/screens/pageviewdemo.dart';
 import 'package:app19/others/profile.dart';
@@ -26,14 +27,14 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
               onPressed: () async {
-                /*bool valid = await FitbitConnector.isTokenValid();
+                bool valid = await FitbitConnector.isTokenValid();
                 print(valid);
                 if (!valid) {
                   await FitbitConnector.refreshToken(
                     clientID: '238CL6',
                     clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
                   );
-                }*/
+                }
                 DateTime temp = DateTime.now();
                 String dataString = temp.year.toString() +
                     temp.month.toString() +
@@ -93,14 +94,14 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.refresh)),
           IconButton(
               onPressed: () async {
-                /*bool valid = await FitbitConnector.isTokenValid();
+                bool valid = await FitbitConnector.isTokenValid();
                 print(valid);
                 if (valid) {
                   await FitbitConnector.unauthorize(
                     clientID: '238CL6',
                     clientSecret: '9ba8e03acc6170c27f5654037ee7a13a',
                   );
-                }*/
+                }
                 Navigator.pop(context, 'login');
               },
               icon: Icon(Icons.logout)),
@@ -150,9 +151,9 @@ class NavigationDrawer extends StatelessWidget {
               return Text('${profile.name}',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold));
             }),
-            Consumer<Profile>(builder: (context, Profile, child) {
+            /*Consumer<Profile>(builder: (context, Profile, child) {
               return Text('${profile.email}');
-            }),
+            }),*/
             SizedBox(
               height: 12,
             ),
