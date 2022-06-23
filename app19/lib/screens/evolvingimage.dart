@@ -42,6 +42,8 @@ class _EvolvingImageState extends State<EvolvingImage> {
           await Provider.of<DatabaseRepository>(context, listen: false)
               .get_numPezzo(ID);
       _pezzo = valuepezzo ?? 1;
+      await Provider.of<DatabaseRepository>(context, listen: false)
+              .update_numPezzo(_pezzo, dataString);
     } else {
       final valuepezzo =
           await Provider.of<DatabaseRepository>(context, listen: false)
@@ -53,6 +55,8 @@ class _EvolvingImageState extends State<EvolvingImage> {
           await Provider.of<DatabaseRepository>(context, listen: false)
               .get_numPuzzle(ID);
       numpuzzle = valuepuzzle ?? 1;
+      await Provider.of<DatabaseRepository>(context, listen: false)
+              .update_numPuzzle(numpuzzle, dataString);
     } else {
       final valuepuzzle =
           await Provider.of<DatabaseRepository>(context, listen: false)
