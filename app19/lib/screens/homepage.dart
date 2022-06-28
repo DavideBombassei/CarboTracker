@@ -151,9 +151,6 @@ class NavigationDrawer extends StatelessWidget {
               return Text('${profile.name}',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold));
             }),
-            /*Consumer<Profile>(builder: (context, Profile, child) {
-              return Text('${profile.email}');
-            }),*/
             SizedBox(
               height: 12,
             ),
@@ -162,7 +159,6 @@ class NavigationDrawer extends StatelessWidget {
                   ? Text('')
                   : Text(
                       'BMI: ${((profile.weight!) / ((profile.height!) * (profile.height!))).toStringAsFixed(2)}',
-                      //style: TextStyle(color: Color.fromARGB(255, 61, 61, 61))
                     );
             }),
           ],

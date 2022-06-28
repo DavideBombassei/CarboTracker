@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         themeCollection: themeCollection,
         defaultThemeId: AppThemes.LightBlue,
         builder: (context, theme) {
-          //Here we return a MultiProvider widget, which contains the providers used to communicate with the other section
+          //Here we return a MultiProvider widget, which contains the providers used to communicate with the other sections
           //of the app, and the MaterialApp widget in which we can find the routes of our application
           return MultiProvider(
             providers: [
@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
             child: MaterialApp(
               theme: theme,
               initialRoute: 'login',
-              //We use the routes to navigate among the variouses pages of the app
+              //We use the routes to navigate among the various pages of the app
               routes: {
                 'login': (context) => LoginPage(),
                 'home': (context) => HomePage(),

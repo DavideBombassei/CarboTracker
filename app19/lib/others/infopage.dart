@@ -45,19 +45,10 @@ class _InfoPageState extends State<InfoPage> {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           double? temporarycheck = data[index]?.value;
-                          return /*Card(
-                                elevation: 5,
-                                child:*/
-                              ListTile(
+                          return ListTile(
                             title: Text('Data: ${data[index]?.dataString}'),
                             leading: Text(' ${data[index]?.id}'),
                             subtitle: Text('Click to show info'),
-                            /*trailing: Text(
-                                '${data[index]?.value.toString().substring(1, 6)}'),
-                            //Text('CHO : ${data[mealIndex].fitbitCals}'),
-                            subtitle: Text(
-                              'STEPS : ${data[index]?.fitbitSteps}   CAL : ${data[index]?.fitbitCals}',
-                            ),*/
                             onTap: () {
                               showDialog<void>(
                                 context: context,

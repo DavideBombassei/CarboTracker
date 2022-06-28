@@ -8,13 +8,11 @@ class EvolvingImage extends StatefulWidget {
   State<EvolvingImage> createState() => _EvolvingImageState();
 }
 
-int _pezzo = 1; //queste due variabili sono da salvare altrimenti
-int numpuzzle = 1; //chiudendo forzatamente l'app vengono reinizzializate
-// TO FIX : https://docs.flutter.dev/cookbook/persistence/key-value
+int _pezzo = 1;
+int numpuzzle = 1;
 
 class _EvolvingImageState extends State<EvolvingImage> {
   double val = 0;
-  //final numpuzzle = 1;
   String pez = 'pezzo';
   String puz = 'puzzle';
 
@@ -43,7 +41,7 @@ class _EvolvingImageState extends State<EvolvingImage> {
               .get_numPezzo(ID);
       _pezzo = valuepezzo ?? 1;
       await Provider.of<DatabaseRepository>(context, listen: false)
-              .update_numPezzo(_pezzo, dataString);
+          .update_numPezzo(_pezzo, dataString);
     } else {
       final valuepezzo =
           await Provider.of<DatabaseRepository>(context, listen: false)
@@ -56,7 +54,7 @@ class _EvolvingImageState extends State<EvolvingImage> {
               .get_numPuzzle(ID);
       numpuzzle = valuepuzzle ?? 1;
       await Provider.of<DatabaseRepository>(context, listen: false)
-              .update_numPuzzle(numpuzzle, dataString);
+          .update_numPuzzle(numpuzzle, dataString);
     } else {
       final valuepuzzle =
           await Provider.of<DatabaseRepository>(context, listen: false)
@@ -77,10 +75,6 @@ class _EvolvingImageState extends State<EvolvingImage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 46),
-            /*Text(
-              'Puzzle',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),*/
             const SizedBox(height: 50),
             ClipRRect(
               borderRadius: BorderRadius.circular(50),
@@ -114,13 +108,11 @@ class _EvolvingImageState extends State<EvolvingImage> {
                       builder: (_) => AlertDialog(
                             insetPadding: EdgeInsets.symmetric(horizontal: 40),
                             backgroundColor: Colors.transparent,
-                            //insetPadding: EdgeInsets.all(30),
                             content: Stack(
                               overflow: Overflow.visible,
                               alignment: Alignment.center,
                               children: <Widget>[
                                 Container(
-                                    //width: double.infinity,
                                     height: 170,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(15),
@@ -216,38 +208,7 @@ class _EvolvingImageState extends State<EvolvingImage> {
           .update_numPuzzle(numpuzzle, dataString);
       await Provider.of<DatabaseRepository>(context, listen: false)
           .update_alreadyClicked(true, dataString);
-      /*showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-              insetPadding: EdgeInsets.symmetric(horizontal: 40),
-              //backgroundColor: Colors.transparent,
-              content: Container(
-                  width: 170,
-                  child: Column(children: [
-                    Text('GOOD JOB!, you have completed the puzzle',
-                        textAlign: TextAlign.center),
-                    Image.asset('assets/images/${numpuzzle - 1}puzzle9.png',
-                        width: 150, height: 150),
-                    FloatingActionButton(
-                      onPressed: _saveImage,
-                      child: Icon(Icons.save),
-                    )
-                  ]))));*/
     }
     setState(() {});
   }
-
-  /*void _saveImage() {
-    try {
-      // Saved with this method.
-      var imageId = ImageDownloader.downloadImage(
-        'assets/images/',
-      );
-      if (imageId == null) {
-        return;
-      }
-    } catch (error) {
-      print(error);
-    }
-  }*/
 }

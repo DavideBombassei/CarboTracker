@@ -14,7 +14,6 @@ class CarboListUpdate extends StatefulWidget {
 }
 
 class Item {
-//String expandedValue;
   final String header;
   final Widget? body;
   bool isExpanded;
@@ -22,7 +21,6 @@ class Item {
   int index;
 
   Item({
-    //required this.expandedValue,
     required this.header,
     this.body,
     this.isExpanded = false,

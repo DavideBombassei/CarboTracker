@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-//import 'package:date_format/date_format.dart';
 import 'package:app19/others/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer' as developer;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Profile _editProfile =
-    Profile(name: '${profile.name}', email: '${profile.email}');
+Profile _editProfile = Profile(name: '${profile.name}');
 
 class EditProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Edit Profile'),
         centerTitle: true,
@@ -62,8 +59,6 @@ class _EditProfileState extends State<EditProfileState> {
 
   TextEditingController _nameControll =
       TextEditingController(text: profile.name);
-  //TextEditingController _emailControll =
-  //  TextEditingController(text: profile.email);
 
   DateTime? _date = DateTime(2000, 1, 1);
   TextEditingController _weightControll =
@@ -72,15 +67,12 @@ class _EditProfileState extends State<EditProfileState> {
       TextEditingController(text: profile.height.toString());
 
   Widget _modifyProfile(BuildContext context) {
-    //developer.log('LOG:${_editProfile.name}');
     final format = DateFormat("yyyy-MM-dd");
     return Form(
         key: _formKey,
         child: Container(
           margin: new EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           child: Column(
-            //crossAxisAlignment: CrossAxisAlignment.stretch,
-            //mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextFormField(
                   decoration: const InputDecoration(
@@ -89,7 +81,6 @@ class _EditProfileState extends State<EditProfileState> {
                     labelText: 'Insert your name: ',
                   ),
                   controller: _nameControll,
-                  // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a name';
@@ -100,26 +91,6 @@ class _EditProfileState extends State<EditProfileState> {
                     _editProfile.name = _nameControll.text;
                     saveProfileName(_editProfile.name);
                   }),
-              /*TextFormField(
-                  decoration: const InputDecoration(
-                    icon: Icon(
-                      Icons.email,
-                    ),
-                    hintText: 'Email *',
-                    labelText: 'Insert your email',
-                  ),
-                  controller: _emailControll,
-                  validator: (value) {
-                    if (!isValidEmail(value)) return 'Enter VALID email';
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _editProfile.email = _emailControll.text;
-                    saveProfileEmail(_editProfile.email);
-                  }),*/
               DateTimeField(
                   initialValue: profile.dateTime,
                   decoration: const InputDecoration(
@@ -244,11 +215,6 @@ class _EditProfileState extends State<EditProfileState> {
 Future saveProfileName(value) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('profileName', value);
-}
-
-Future saveProfileEmail(value) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('profileEmail', value);
 }
 
 Future saveProfileWeight(value) async {

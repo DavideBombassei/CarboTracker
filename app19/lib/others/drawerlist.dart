@@ -22,21 +22,6 @@ class DrawerList extends StatelessWidget {
                 },
                 icon: Icon(Icons.arrow_right)),
           ),
-          /*ListTile(
-            leading: const Icon(Icons.calendar_month),
-            title: const Text(
-              'Calendar',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, 'calendar');
-            },
-            trailing: IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'calendar');
-                },
-                icon: const Icon(Icons.arrow_right)),
-          ),*/
           ListTile(
             leading: const Icon(Icons.portrait_outlined),
             title: const Text(

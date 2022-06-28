@@ -6,10 +6,9 @@ import 'package:app19/repository/databaseRepository.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-String? profileName = 'Anna Arnaudo';
-String? profileEmail = 'anna.arnaudo@gmail.com';
-double? profileWeight = 62;
-double? profileHeight = 1.62;
+String? profileName = 'User19';
+double? profileWeight = 80;
+double? profileHeight = 1.75;
 DateTime profileBirthday = DateTime(2000, 1, 1);
 
 class LoginPage extends StatelessWidget {
@@ -60,8 +59,6 @@ class _LoginDemoState extends State<LoginDemo> {
             onPressed: () async {
               if (_usercontroller.value.text == 'user19' &&
                   _pswcontroller.value.text == 'demo19') {
-                //if (_usercontroller.value.text == '' &&
-                //_pswcontroller.value.text == '') {
                 Navigator.pushNamed(context, 'home');
                 String? userId = await FitbitConnector.authorize(
                     context: context,
@@ -71,7 +68,6 @@ class _LoginDemoState extends State<LoginDemo> {
                     callbackUrlScheme: 'example');
 
                 profileName = await getProfileName();
-                profileEmail = await getProfileEmail();
                 profileWeight = await getProfileWeight();
                 profileHeight = await getProfileHeight();
                 int profileBirthdayd = await getProfileBirthdayd();
@@ -116,26 +112,19 @@ class _LoginDemoState extends State<LoginDemo> {
 
 Future<String> getProfileName() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final profileName = prefs.getString('profileName') ?? 'Anna Arnaudo';
+  final profileName = prefs.getString('profileName') ?? 'User19';
   return profileName;
-}
-
-Future<String> getProfileEmail() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  final profileEmail =
-      prefs.getString('profileEmail') ?? 'anna.arnaudo@gmail.com';
-  return profileEmail;
 }
 
 Future<double> getProfileWeight() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final profileWeight = prefs.getDouble('profileWeight') ?? 62;
+  final profileWeight = prefs.getDouble('profileWeight') ?? 80;
   return profileWeight;
 }
 
 Future<double> getProfileHeight() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final profileHeight = prefs.getDouble('profileHeight') ?? 1.62;
+  final profileHeight = prefs.getDouble('profileHeight') ?? 1.75;
   return profileHeight;
 }
 

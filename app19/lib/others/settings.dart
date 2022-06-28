@@ -126,18 +126,15 @@ class _SettingsState extends State<Settings> {
 
 String birthday = '';
 Widget _visualProfile(BuildContext context) {
-  //developer.log('LOG:${_editProfile.name}');
   return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      //mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const SizedBox(height: 20),
         AvatarGlow(
           glowColor: Theme.of(context).colorScheme.primary,
           endRadius: 100.0,
           child: Material(
-            // Replace this child with your own
             elevation: 8.0,
             shape: CircleBorder(),
             child: CircleAvatar(
@@ -155,13 +152,6 @@ Widget _visualProfile(BuildContext context) {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24));
           }),
           const SizedBox(height: 10),
-          /*Consumer<Profile>(builder: (context, Profile, child) {
-            return Text('${profile.email}',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 121, 120, 120),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16));
-          }),*/
           const SizedBox(height: 30),
           Consumer<Profile>(builder: (context, Profile, child) {
             return (profile.height == null || profile.weight == null)
@@ -182,8 +172,6 @@ Widget _visualProfile(BuildContext context) {
           }),
           const SizedBox(height: 30),
           Consumer<Profile>(builder: (context, Profile, child) {
-            //DateTime provDate = (DateTime) profile.dateTime;
-            //DateFormat('yyyy-MM-dd').format(provDate);
             final format = DateFormat('dd-MM-yyyy');
             if (profile.dateTime != null) {
               birthday = format.format(profile.dateTime!);
@@ -208,10 +196,7 @@ Widget _visualProfile(BuildContext context) {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(Icons.cake),
-                          Text(
-                              //'Birthday: ${DateFormat('yyyy-MM-dd').format(profile.dateTime)}',
-                              '    $birthday',
-                              style: TextStyle(fontSize: 14))
+                          Text('    $birthday', style: TextStyle(fontSize: 14))
                         ]));
           }),
           Consumer<Profile>(builder: (context, Profile, child) {
@@ -227,7 +212,6 @@ Widget _visualProfile(BuildContext context) {
                 : Text('Weight: ${profile.weight}',
                     style: TextStyle(color: Colors.grey));
           }),
-          //_moreInformation(context)
         ]),
       ]);
 }

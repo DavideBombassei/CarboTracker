@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:app19/repository/databaseRepository.dart';
-import 'package:app19/others/carbohydrates.dart';
 
 double adjuster_x = 15;
 
@@ -48,36 +47,20 @@ class _CarboCounterState extends State<CarboCounter> {
   }
 
   List<String> phrases = [
-    //'Solo chi rischia di andare troppo lontano avrà la possibilità di scoprire quanto lontano si può andare',
-    'Se non credi in te stesso, nessuno lo farà per te',
-    'Quando ti dicono che non puoi farcela, ti stanno mostrando i loro limiti, non i tuoi',
-    //'Senza ambizione non si inizia nulla. Senza lavoro non si finisce nulla. Il successo non ti verrà regalato. Devi conquistarlo',
-    'La vita è per il 10% cosa ti accade e per il 90% come reagisci'
+    "If you don't believe in yourself, no one will do it for you",
+    "When you change your thoughts, remember to also change your world",
+    "Life is 10% what happens to you and 90% how you react",
+    "Don’t let yesterday take up too much of today",
+    "The most difficult thing is the decision to act, the rest is merely tenacity",
   ];
 
   @override
   Widget build(BuildContext context) {
     double infoposition_y = 36.0;
     double infoposition_x = 70.0;
-    //double? stepsValue = 0;
-
-    //Timer mytimer = Timer.periodic(Duration(minutes:1), (timer) async{
-    //double? temp = await getSteps();
-    //setState(() {
-    //stepsValue = temp;
-    //});
-    //});
-
     return Padding(
       padding: EdgeInsets.only(top: 30.0),
       child: Column(children: [
-        /*Text(
-          'CarboCounter',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),*/
         SizedBox(
           height: 80,
         ),
